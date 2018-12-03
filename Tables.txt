@@ -1,0 +1,1 @@
+Ascii, List of characters based on ascii values (base 10, 16 and 8)
