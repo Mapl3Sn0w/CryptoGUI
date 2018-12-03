@@ -82,12 +82,8 @@ class InitCheckList:
 class InitTables:
     def __init__(self):
         
-        #initialize Treeview
+        #initialize tabletree
         tabletree = ttk.Treeview(tabTables)
-        
-        tabletree.item('', open = True)
-        tabletree.pack()
-
         tabletree['columns'] = ('col1')
         
         tabletree.column('#0', width=200, anchor='w')
@@ -96,6 +92,41 @@ class InitTables:
         tabletree.column('col1', width=500, anchor='w')
         tabletree.heading('col1', text='Description')
 
+        for elements in list_of_tables:
+            arr_temp=[elements[1]]
+            tabletree.insert('', '0', text=elements[0], values = arr_temp)
+      
+        tabletree.grid(sticky='N',row=1,column=1)
+      
+
+class InitTableBasic:
+    def __init__(self):
+        #initialize tableBasictree
+        tablebasictree = ttk.Treeview(tabTables,height=32, selectmode = "extended")
+        tablebasictree['columns'] = ('col1','col2','col3')
+        
+        tablebasictree.column('#0', width=200, anchor='w')
+        tablebasictree.heading('#0', text='Number')
+        
+        tablebasictree.column('col1', width=200, anchor='w')
+        tablebasictree.heading('col1', text='Alphabet')
+    
+        tablebasictree.column('col2', width=200, anchor='w')
+        tablebasictree.heading('col2', text='Prime')
+        
+        #tablebasictree.column('col3', width=200, anchor='w')
+        #tablebasictree.heading('col3', text='Ascii')
+    
+        #asciichar=[]
+        #for x in range(1,255):
+        #    asciichar.append(chr(x))
+        
+        for elements in list_of_tablebasic:
+            arr_temp=[elements[1],elements[2]]
+            tablebasictree.insert('', '0', text=elements[0], values = arr_temp)
+      
+        tablebasictree.grid(sticky='N',row=2,column=1)
+ 
 class InitAlphabets:
     def __init__(self):
         
@@ -110,18 +141,6 @@ class InitAlphabets:
         #alphatree.item('', open = True)
         alphatree.grid(sticky='N',row=1,column=1)
         
-        basewidth = 500
-        
-        load = Image.open('Futurama(AL1).png')
-        wpercent = (basewidth / float(load.size[0]))
-        hsize = int((float(load.size[1])*float(wpercent)))
-        load = load.resize((basewidth,hsize),PIL.Image.ANTIALIAS)
-        
-        render = ImageTk.PhotoImage(load)
-        img = Label(tabAlphabets, image = render)
-        img.image=render
-        img.grid(sticky='N',row=1,column=2)
-        
         alphatree['columns'] = ('col1')
         
         alphatree.column('#0', width=300, anchor='w')
@@ -130,13 +149,29 @@ class InitAlphabets:
         alphatree.column('col1', width=50, anchor='w')
         alphatree.heading('col1', text='Language name')
         
+        #Hide the columns following the first one
+        alphatree["displaycolumns"]=()
+        
+        #Define result of clicking on line in alphatree
         def selectItem(a):
             curItem = alphatree.focus()
             contents = (alphatree.item(curItem))
             Line_data = contents['values']
             
             for data in Line_data:
-                print(data)
+                
+                basewidth = 500
+        
+                load = Image.open(str(data) + '.png')
+                wpercent = (basewidth / float(load.size[0]))
+                hsize = int((float(load.size[1])*float(wpercent)))
+                load = load.resize((basewidth,hsize),PIL.Image.ANTIALIAS)
+                
+                render = ImageTk.PhotoImage(load)
+                img = Label(tabAlphabets, image = render)
+                img.image=render
+                img.grid(sticky='N',row=1,column=2)
+                    
                 #Set up image on unclick
             
         alphatree.bind('<ButtonRelease-1>', selectItem)
@@ -197,10 +232,17 @@ with open('Tables.txt') as f:
         inner_list = [elt.strip() for elt in line.split(',')]
         list_of_tables.append(inner_list)
 
+list_of_tablebasic = []
+with open('Table_Basic.txt') as f:
+    for line in f:
+        inner_list = [elt.strip() for elt in line.split(',')]
+        list_of_tablebasic.append(inner_list)
+
 call = InitCheckList()
 call = InitTables()
 call = InitAbout()
 call = InitAlphabets()
+call = InitTableBasic()
 
 #Everything goes above this
 root.mainloop()
