@@ -1,0 +1,20 @@
+Public Function ReverseString(strInput As String) As String
+
+'Arrays start at 0
+
+Dim intLength As Integer
+intLength = Len(strInput)
+
+Dim strCharReverse() As String
+ReDim strCharReverse(intLength) As String
+
+Dim strReverse As String
+
+For i = 0 To intLength - 1
+    strCharReverse(i) = Left(Right(strInput, i + 1), 1)
+    strReverse = strReverse & strCharReverse(i)
+Next i
+
+ReverseString = strReverse
+
+End Function

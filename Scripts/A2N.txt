@@ -1,0 +1,56 @@
+Option Base 1
+Function A2N(strInput As String, Optional strSeperator As String) As String
+
+Dim arrNumber As Variant
+Dim arrAlpha As Variant
+Dim arrInput As Variant
+
+Dim strTemp As String
+Dim blnTemp As String
+
+blnTemp = False
+
+Dim i As Integer
+Dim j As Long
+Dim IsInArray As Integer
+
+arrNumber = Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26)
+arrAlpha = Array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
+
+Dim intALen As Integer
+intALen = Len(strInput)
+
+Dim strA() As String
+ReDim strA(intALen) As String
+
+For i = 1 To intALen
+    strA(i) = Mid(UCase(strInput), i, 1)
+Next i
+
+For Each Letter In strA
+
+  IsInArray = -1
+
+    For j = LBound(arrAlpha) To UBound(arrAlpha)
+        If StrComp(Letter, arrAlpha(j), vbTextCompare) = 0 Then
+            IsInArray = j
+            Exit For
+        End If
+    Next j
+
+    If IsInArray <> -1 Then
+        
+        If blnTemp = False Then
+            strTemp = arrNumber(j)
+            blnTemp = True
+        Else
+            strTemp = strTemp & strSeperator & arrNumber(j)
+        End If
+            
+    End If
+
+Next Letter
+
+A2N = strTemp
+
+End Function

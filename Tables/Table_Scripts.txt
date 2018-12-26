@@ -1,0 +1,6 @@
+VBA, SWITCH01, String 0s and 1s (gray code)
+VBA, REVERSESTRING, Reverse order of string
+VBA, VLOOKUPS, Lookup nth match of vlookup
+VBA, SEMA, Different transformations for SEMAPHORE (see code)
+VBA, A2N, Transform letters into numbers (left to right)
+VBA, CONCATENATERANGE, Concatenate cells in range by row or column

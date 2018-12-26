@@ -12,6 +12,8 @@ try:
     import PIL
     from PIL import ImageTk, Image
     
+    import os
+    
 except ImportError:
     print('You need to import tkinter and PIL')
     raise SystemExit
@@ -62,7 +64,7 @@ class InitCheckList:
         
         for elements in list_of_lists:
             arr_temp=[elements[1],elements[2]]
-            checktree.insert('', '0', text=elements[0], values = arr_temp)
+            checktree.insert('', 'end', text=elements[0], values = arr_temp)
         
         checktree.item('', open = True)
         checktree.grid(sticky='N',row=1,column=1)
@@ -77,7 +79,6 @@ class InitCheckList:
         
         checktree.column('col2', width=500, anchor='w')
         checktree.heading('col2', text='Reference')
-
         
 class InitTables:
     def __init__(self):
@@ -94,10 +95,9 @@ class InitTables:
 
         for elements in list_of_tables:
             arr_temp=[elements[1]]
-            tabletree.insert('', '0', text=elements[0], values = arr_temp)
+            tabletree.insert('', 'end', text=elements[0], values = arr_temp)
       
         tabletree.grid(sticky='N',row=1,column=1)
-      
 
 class InitTableBasic:
     def __init__(self):
@@ -113,17 +113,10 @@ class InitTableBasic:
     
         tablebasictree.column('col2', width=200, anchor='w')
         tablebasictree.heading('col2', text='Prime')
-        
-        #tablebasictree.column('col3', width=200, anchor='w')
-        #tablebasictree.heading('col3', text='Ascii')
-    
-        #asciichar=[]
-        #for x in range(1,255):
-        #    asciichar.append(chr(x))
-        
+
         for elements in list_of_tablebasic:
             arr_temp=[elements[1],elements[2]]
-            tablebasictree.insert('', '0', text=elements[0], values = arr_temp)
+            tablebasictree.insert('', 'end', text=elements[0], values = arr_temp)
       
         tablebasictree.grid(sticky='N',row=2,column=1)
  
@@ -132,10 +125,9 @@ class InitAlphabets:
         
         #initialize Treeview
         alphatree = ttk.Treeview(tabAlphabets,height=32, selectmode = "extended")
-                
-        for elements in list_of_Alphabets:
-            arr_temp=[elements[1]]
-            alphatree.insert('', '0', text=elements[0], values = arr_temp)
+    
+        for alphabet in range(0,len(list_of_Alphabets)):
+            alphatree.insert('', 'end', text=list_of_Alphabets[alphabet], values = alphabet)
         
         #No nodes in tree, so unnecessary
         #alphatree.item('', open = True)
@@ -157,12 +149,12 @@ class InitAlphabets:
             curItem = alphatree.focus()
             contents = (alphatree.item(curItem))
             Line_data = contents['values']
-            
+
             for data in Line_data:
                 
                 basewidth = 500
-        
-                load = Image.open(str(data) + '.png')
+                
+                load = Image.open('Alphabets/'+ str(list_of_Alphabets[Line_data[0]]))
                 wpercent = (basewidth / float(load.size[0]))
                 hsize = int((float(load.size[1])*float(wpercent)))
                 load = load.resize((basewidth,hsize),PIL.Image.ANTIALIAS)
@@ -171,11 +163,41 @@ class InitAlphabets:
                 img = Label(tabAlphabets, image = render)
                 img.image=render
                 img.grid(sticky='N',row=1,column=2)
-                    
-                #Set up image on unclick
-            
-        alphatree.bind('<ButtonRelease-1>', selectItem)
         
+                #Set up image on unclick
+        alphatree.bind('<ButtonRelease-1>', selectItem)
+
+class InitScripts:
+    def __init__(self):
+        
+        scripttree = ttk.Treeview(tabPrograms)
+        scripttree['columns'] = ('col1','col2')
+        
+        scripttree.column('#0', width=200, anchor='w')
+        scripttree.heading('#0', text='Code type')
+        
+        scripttree.column('col1', width=500, anchor='w')
+        scripttree.heading('col1', text='Name')
+        
+        scripttree.column('col2', width=500, anchor='w')
+        scripttree.heading('col2', text='Description')
+        
+        for elements in list_of_scripts:
+            arr_temp=[elements[1],elements[2]]
+            scripttree.insert('', 'end', text=elements[0], values = arr_temp)
+      
+        scripttree.grid(sticky='N',row=1,column=1)
+        
+        def selectItem(a):
+            curItem = scripttree.focus()
+            contents = (scripttree.item(curItem))
+            Line_data = contents['values']
+
+            f = open("Scripts/"+Line_data[0]+".txt", "r", encoding="UTF8").readlines()
+            ttk.Label(tabPrograms,text="\n".join(f)).grid(sticky="W",row=2,column=1)
+        
+        scripttree.bind('<ButtonRelease-1>', selectItem)
+
 class InitAbout:
     def __init__(self):
         AboutLine1 = Label(tabAbout, text="CryptoGUI")
@@ -194,7 +216,7 @@ class InitAbout:
         AboutLine4.grid(sticky="W",row=5, column=0)
         AboutLine4.config(font=("Courier",25))
         
-        AboutLine5 = Label(tabAbout, text="Last modified on: 2018-12-01")
+        AboutLine5 = Label(tabAbout, text="Last modified on: 2018-12-26")
         AboutLine5.grid(sticky="W",row=6, column=0)
         AboutLine5.config(font=("Courier",25))
         
@@ -215,34 +237,43 @@ class InitAbout:
         AboutLine9.config(font=("Courier",10))
 
 list_of_lists = []
-with open('Checklist.txt') as f:
+with open('Tables/Checklist.txt') as f:
     for line in f:
         inner_list = [elt.strip() for elt in line.split(',')]
         list_of_lists.append(inner_list)
 
 list_of_Alphabets = []
-with open('Alphabets.txt') as f:
-    for line in f:
-        inner_list = [elt.strip() for elt in line.split(',')]
-        list_of_Alphabets.append(inner_list)
+for alphabet in os.listdir("./Alphabets/"):
+    if alphabet.endswith(".png"):
+        list_of_Alphabets.append(str(alphabet))
 
 list_of_tables = []
-with open('Tables.txt') as f:
+with open('Tables/Tables.txt') as f:
     for line in f:
         inner_list = [elt.strip() for elt in line.split(',')]
         list_of_tables.append(inner_list)
 
 list_of_tablebasic = []
-with open('Table_Basic.txt') as f:
+with open('Tables/Table_Basic.txt') as f:
     for line in f:
         inner_list = [elt.strip() for elt in line.split(',')]
         list_of_tablebasic.append(inner_list)
+
+list_of_scripts = []
+with open('Tables/Table_Scripts.txt') as f:
+    for line in f:
+        inner_list = [elt.strip() for elt in line.split(',')]
+        list_of_scripts.append(inner_list)
 
 call = InitCheckList()
 call = InitTables()
 call = InitAbout()
 call = InitAlphabets()
 call = InitTableBasic()
+call = InitScripts()
+
+#Command to move file from point a to point b, and renaming said file
+#shutil.move('C:\\bacon.txt', 'C:\\eggs\\new_bacon.txt')
 
 #Everything goes above this
 root.mainloop()

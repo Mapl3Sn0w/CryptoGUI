@@ -1,0 +1,46 @@
+Public Function ConcatenateRangeRow(ByVal newArray As Variant, Optional ByVal seperator As String) As String
+
+    Dim cell As Range
+    Dim newString As String
+    Dim i As Long, j As Long
+
+    cellArray = newArray.Value
+
+    For i = 1 To UBound(cellArray, 1)
+        For j = 1 To UBound(cellArray, 2)
+                        newString = newString & (seperator & cellArray(i, j))
+        Next j
+    Next i
+
+    If Len(newString) <> 0 Then
+        newString = Right$(newString, (Len(newString) - Len(seperator)))
+    End If
+
+    ConcatenateRangeRow = newString
+
+End Function
+
+
+
+Public Function ConcatenateRangeCol(ByVal newArray As Variant, Optional ByVal seperator As String) As String
+
+    Dim cell As Range
+    Dim newString As String
+    Dim i As Long, j As Long
+
+    cellArray = newArray.Value
+
+    For i = 1 To UBound(cellArray, 2)
+        For j = 1 To UBound(cellArray, 1)
+                        newString = newString & (seperator & cellArray(j, i))
+        Next j
+    Next i
+    
+   
+    If Len(newString) <> 0 Then
+        newString = Right$(newString, (Len(newString) - Len(seperator)))
+    End If
+    
+    ConcatenateRangeCol = newString
+
+End Function

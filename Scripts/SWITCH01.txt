@@ -1,0 +1,32 @@
+Public Function Switch01(strInput As String) As String
+
+'Arrays start at 0
+
+Dim intLength As Integer
+intLength = Len(strInput)
+
+Dim strChar() As String
+ReDim strChar(intLength - 0) As String
+
+Dim strCharSwitch() As String
+ReDim strCharSwitch(intLength - 0) As String
+
+Dim strSwitch As String
+
+For i = 0 To intLength - 1
+    
+    strChar(i) = Right(Left(strInput, i + 1), 1)
+    
+    If strChar(i) = 0 Then
+        strCharSwitch(i) = 1
+    Else
+        strCharSwitch(i) = 0
+    End If
+    
+    strSwitch = strSwitch & strCharSwitch(i)
+    
+Next i
+
+Switch01 = strSwitch
+
+End Function
