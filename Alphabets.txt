@@ -1,4 +1,0 @@
-(Blank),0
-Futurama (AL1 / aka Alienese),1
-Futurama (AL2),2
-Matoran,3
