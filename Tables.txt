@@ -1,2 +1,0 @@
-Ascii, List of characters based on ascii values (base 10 / 16 / 8)
-Bip word lists, Bitcoin or Monero word lists (all languages)
