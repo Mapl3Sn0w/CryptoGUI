@@ -1,0 +1,32 @@
+from pycoin.key import Key
+import itertools
+
+base58 = ('1','2','3','4','5','6','7','8','9',
+         'A','B','C','D','E','F','G','H','J','K','L','M','N','P','Q','R','S','T','U','V','W','X','Y','Z',
+         'a','b','c','d','e','f','g','h','i','j','k','m','n','o','p','q','r','s','t','u','v','w','x','y','z')
+
+#Create an array of correct length for WIF. Lists within the list S corresponds to two options for one character
+S=["L",["a","b"],"c"]
+
+strList = list(itertools.product(*S))
+
+for strWIF in strList:
+    JoinedStrWIF = ''.join(strWIF)
+    
+    #Check if WIF is length 52 for the L/K type and continue loop if not
+    if len(JoinedStrWIF) != 52:
+        print("Not len 52" + " | " + JoinedStrWIF)
+        continue
+    
+    try:
+        
+        Solution = Key.from_text(JoinedStrWIF)
+        SolutionKey = Solution.address()
+        
+        if SolutionKey == 'PUT PUBLIC ADDRESS SOLUTION':
+            print("Success" + " | " + SolutionKey)
+        else:
+            print("Fail" + " | " + SolutionKey)
+            
+    except:
+        pass

@@ -1,0 +1,17 @@
+import pandas as pd
+import pandas as pd2
+
+df = pd.read_excel('INPUT_EXCELFILE', sheet_name='PKlist')
+ListToTest = df['PKsToTry']
+
+listpks = [] 
+
+for x in ListToTest:
+    from eth_keys import keys
+    hexString = x
+    hexBytes = bytearray.fromhex(hexString)
+    pk = keys.PrivateKey(hexBytes)
+    pubAddress = pk.public_key.to_checksum_address()
+    listpks.append(pubAddress)
+
+pd2.DataFrame(listpks).to_excel('OUTPUT_EXCELFILE', header=False, index=False)

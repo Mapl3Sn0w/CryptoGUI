@@ -1,0 +1,39 @@
+from PIL import Image
+
+im = Image.open('test.png') #your image
+im = im.convert('RGB')
+
+width = im.size[0] #define W and H
+height = im.size[1]
+
+list_RGB = []
+
+for x in range(width):
+    for y in range(height):
+        RGB = im.getpixel((x,y))
+        
+        if RGB not in list_RGB:
+            list_RGB.append(RGB)
+        
+im_new=[]
+
+for i in range(0,len(list_RGB)):
+    im_new.append(i)
+
+for colors in range(0,len(list_RGB)):    
+    im_new[colors] = Image.new('RGB',(width,height))
+    i=0
+    
+    for x in range(width):
+        for y in range(height):
+            
+            if im.getpixel((x,y))==list_RGB[colors]:
+                im_new[colors].putpixel((x,y),list_RGB[colors])
+                i+=1
+            else:
+                pass
+                #im_new[colors].putpixel((x,y),(255,255,255))
+    
+    Save_Filename = 'im_new' + str(list_RGB[colors]) + '.png'       
+    print(Save_Filename)  
+    im_new[colors].save(Save_Filename)

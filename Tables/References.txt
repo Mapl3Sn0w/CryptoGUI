@@ -1,0 +1,75 @@
+Alphabets,Hebrew,https://en.wikipedia.org/wiki/Gematria
+Alphabets,Malachim,https://translate.google.com/translate?hl=en&sl=de&u=http://kryptografie.de/kryptografie/chiffre/malachim.htm&prev=search
+Barcode,Barcode decoder,https://zxing.org/w/decode.jspx
+Barcode,Create barcode from known input and more,https://barcode.tec-it.com/en
+Barcode,List of barcodes,https://www.scandit.com/types-barcodes-choosing-right-barcode/
+Barcode,QR code reader and fixer github,https://github.com/Merricx/qrazybox
+Barcode,QR code reader and fixer online,https://merricx.github.io/qrazybox/
+Classic cryptography,50 tools,https://www.geocacherscompass.com/puzzle-resources/
+Classic cryptography,Alphacipher: Value assigned to each letter,https://www.puzzler.com/puzzles-a-z/alphacipher
+Classic cryptography,Atbash, Reverse string, ROT,https://a2x2.github.io/text/
+Classic cryptography,Chronogram,http://www.maphistory.info/chronograms.html
+Classic cryptography,Chronogram,http://www.mathematische-basteleien.de/chronograms.htm
+Classic cryptography,Conversion (bases + science related conversions),http://convertxy.com/
+Classic cryptography,Cryptogram online solver,https://quipqiup.com/
+Classic cryptography,Cyberchef (downloadable),https://gchq.github.io/CyberChef/
+Classic cryptography,Date,https://temporenc.org/
+Classic cryptography,Decode morse code from file or microphone + other,https://morsecode.scphillips.com/labs/decoder/
+Classic cryptography,Detect common encoding techniques,https://a4x.me/tools/decode/
+Classic cryptography,Leet,http://www.robertecker.com/hp/research/leet-converter.php?lang=en
+Classic cryptography,Music,https://p22.com/musicfont/
+Classic cryptography,Search for possible links based on identifier,https://a2x2.github.io/link/
+Classic cryptography,Semaphore encoder,http://www.semaphorify.info/
+Classic cryptography,Variety of decoders,http://rumkin.com/tools/cipher/
+Classic cryptography,Variety of decoders,https://www.dcode.fr/
+Classic cryptography,Vigen�re,https://wiremask.eu/tools/vigenere-cracker/
+Classic cryptography,Vigenere,https://www.guballa.de/vigenere-solver
+Coding,Binwalk,https://github.com/ReFirmLabs/binwalk
+Coding,Learn Bash,http://www.learnshell.org/
+Coding,Learn Bash,https://linuxacademy.com/
+Coding,Learn Bash,https://ryanstutorials.net/bash-scripting-tutorial/bash-script.php
+Coding,Learn Bash,https://www.tldp.org/LDP/abs/html/index.html
+Coding,Run any language online,https://tio.run/#
+Colors,Color blind simulator,https://www.color-blindness.com/coblis-color-blindness-simulator/
+Colors,Combination calculator,https://www.sessions.edu/color-calculator/
+Colors,Details about a color (hex format),https://encycolorpedia.com/
+Colors,Extract colors in image (hex format),https://pinetools.com/get-colors-image
+Colors,Hex colors of brands and companies,https://brandcolors.net/
+File specifications,File signatures,https://filesignatures.net/index.php?page=search
+File specifications,PNG,http://www.libpng.org/pub/png/png-sitemap.html
+File specifications,ZIP,https://resources.infosecinstitute.com/steganography-what-your-eyes-dont-see/#gref
+Image,view raw pixels of image,rawpixels.net
+Language tool,Anagram solver,https://wordsmith.org/anagram/index.html
+Language tool,Anagram, complete word/phrase, solve cryptogram,https://www.wordfun.ca/
+Language tool,Complete word with missing letters,http://www.puzzlexpress.com/
+Language tool,Extract list of bitcoin seed words from input text,https://incoherency.co.uk/stegoseed/
+Language tool,Full set of unicode characters,https://en.wikibooks.org/wiki/Unicode/Character_reference/0000-0FFF
+Language tool,Google translate app (live translation with phone),N/A
+Numbers,Finding numbers at reference position of PI,http://www.subidiom.com/pi/piday.asp
+Numbers,Interesting facts about numbers,https://www2.stetson.edu/~efriedma/numbers.html
+Numbers,Online encyclopedia of number sequences,https://oeis.org/
+Numbers,PI index and character association,http://www.angio.net/pi/piquery.html
+Open-source program,Cheatengine: Memory editor for running process,https://www.cheatengine.org/downloads.php
+Open-source program,ExifTool,https://www.sno.phy.queensu.ca/~phil/exiftool/
+Open-source program,HxD: Hexeditor with statistics and comparison tool,https://mh-nexus.de/en/hxd/
+Open-source program,Putty: SSL & TTY (accessing networks),https://www.putty.org/
+Open-source program,Screen recorder (linux only),http://www.maartenbaert.be/simplescreenrecorder/
+Open-source program,Steganograpy tool,https://github.com/quangntenemy/Steganabara
+Open-source program,Steganograpy tool,https://github.com/varunon9/Image-Stegano
+Open-source program,Stegsolve (stenography),http://www.caesum.com/handbook/Stegsolve.jar
+Open-source program,Strong stand alone nanogram solver (japanese),Cannot find link anymore
+Other,13 moon calender,http://www.lawoftime.org/thirteenmoon/tutorial.html
+Other,Brute Force - Mnemonics (python),https://github.com/trezor/python-mnemonic?files=1
+Other,Calculate and use geographic coordinates,http://geo.javawa.nl/coordcalc/index_en.html
+Other,Calendar facts,https://www.tondering.dk/claus/calendar.html
+Other,Identify space elements from image,http://nova.astrometry.net/
+Other,Interactive periodic table,https://www.ptable.com/
+Other,International phonetic association ressources,https://www.internationalphoneticassociation.org/content/ipa-chart
+Other,Moon phases & Dates,http://astropixels.com/ephemeris/phasescat/phasescat.html
+Other,Radio frequencies and audio encodings,https://www.sigidwiki.com/wiki/Database
+Other,Robots exclusion protocol (REP) / robots.txt,https://en.wikipedia.org/wiki/Robots_exclusion_standard
+Other,XML-RPC Validation Service,https://xmlrpc.eritreo.it/
+Steganography,Decoder online,https://futureboy.us/stegano/decinput.html
+Steganography,Forensic Magnifier,https://29a.ch/photo-forensics/#forensic-magnifier
+Steganography,Stand-alone image analysis,https://imagej.net/Fiji/Downloads
+Steganography,Steganography message solver,http://stylesuxx.github.io/steganography/

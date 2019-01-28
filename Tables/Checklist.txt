@@ -20,15 +20,21 @@ Sound,Reverse/speedup/slowdown,Sonic visualiser / Audacity
 Sound,Hidden image in spectrogram,Sonic visualiser / Audacity
 Sound,Remove background noise,Sonic visualiser / Audacity
 Sound,Hidden beat,Sonic visualiser / Audacity
-String,Google the string,N/A
+String,Google the string,Google
 String,Unusual amount of NEWS letters - Compass references,N/A
 String,Book cipher (x-x-x format Page/line/word Page/line/letter Paragraph/line/word),N/A
-String,Length of string = 11,Youtube
+String,Length of string = 11,Youtube link
+String,Length of string = 65/compare differences between each sequential pair,N/A
+String,Length of string = 128/compare differences between each new pair,N/A
 String,Reverse the string,N/A
 String,Consider only letters or only numbers in the string,N/A
 String,Keyboard shift,N/A
 String,Three types of characters in entire string - consider morse or ternary,N/A
 String,Two types of characters in entire string - consider binary or Bacon,N/A
+String,U2FsdGVkX1 represents Salted_ in based64,OpenSSL AES-CBC
+String,Periodic table (convert to numbers),ptable
+String,Shift all combinations,N/A
+String,Take first/last character of every sentence to make new sentence,N/A
 Numbers-only,Index in PI/E/Sqrt(2)/PHI,subidiom
 Numbers-only,Convert from/to every base,cyberchef
 Numbers-only,Periodic table (convert to letters),ptable
@@ -38,6 +44,7 @@ Numbers-only,Numbers 1 to 5 only - Polybius (even number of characters),N/A
 Numbers-only,Numbers 1 to 6 only - Braille (even or odd number of characters),N/A
 Letters-only,Periodic table (convert to numbers),ptable
 Letters-only,Uppercase/Lowercase - consider binary based or twovalue-based ciphers,N/A
+Hex-only,Copy/paste into hex editor and verify file format,HxD
 External source,Local server (example: 127.0.0.1 port 9999),PuTTY
 External source,Microphone (look for patterns: notes /noise /length),N/A
 External source,Mouse,N/A

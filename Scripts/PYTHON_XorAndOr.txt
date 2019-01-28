@@ -1,0 +1,27 @@
+import imageio
+import matplotlib.image as mimg
+import os
+import math
+
+img=[]
+
+for name in os.listdir("."):
+        if name.endswith(".png"):    
+            img.append(imageio.imread(name))
+            
+NumImages=len(img)
+
+for i in range(0,math.ceil(NumImages/2)):
+    for j in range(0,NumImages):
+        if(i!=j):
+            Xor = img[i]^img[j]
+            mimg.imsave(str(i)+'-'+str(j)+".png", Xor)
+
+#XOR: img[i]^img[j]
+#AND: img[i]&img[j]
+#OR: img[i]|img[j]
+
+#Show image
+#import matplotlib.pyplot as plt
+#plt.imshow(Xor)
+#plt.show()

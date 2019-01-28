@@ -1,0 +1,62 @@
+#continued fraction function for PI
+def continued_fraction(a, b, base=10):
+    """Generate digits of continued fraction a(0)+b(1)/(a(1)+b(2)/(...)."""
+    (p0, q0), (p1, q1) = (a(0), 1), (a(1) * a(0) + b(1), a(1))
+    k = 1
+    while True:
+        (d0, r0), (d1, r1) = divmod(p0, q0), divmod(p1, q1)
+        if d0 == d1:
+            yield d1
+            p0, p1 = base * r0, base * r1
+        else:
+            k = k + 1
+            x, y = a(k), b(k)
+            (p0, q0), (p1, q1) = (p1, q1), (x * p1 + y * p0, x * q1 + y * q0)
+
+#Import list from txt    
+#List in format # # # # # # (example, 55643 65353 74243 etc.)
+
+IndexList = []
+
+with open('INPUT_TXTFILE') as f:
+    for line in f:
+        IndexList=line.split()
+
+digits = continued_fraction(lambda k: 0 if k == 0 else 2 * k - 1,
+                            lambda k: 4 if k == 1 else (k - 1)**2, 10)
+
+IndexListS = sorted(list(map(int, IndexList)))
+print(IndexListS)
+
+#Print elements in IndexListS with new line after each element
+#for item in IndexListS:
+#    print(item)
+
+digits = continued_fraction(lambda k: 0 if k == 0 else 2 * k - 1,
+                                lambda k: 4 if k == 1 else (k - 1)**2, 10)
+
+previous=0
+numdigits=10
+
+for index in IndexListS:
+    #print(index-previous)
+    for k, digit in zip(range(index-previous), digits):
+        pass
+    for k, digit in zip(range(numdigits), digits):
+        print(digit, end='')
+     
+    print()
+    
+    previous = index+numdigits
+
+
+""" Pi Constant
+for k, digit in zip(range(5), digits):
+        print(digit, end='')
+"""
+
+""" Golden ratio constant (Phi)
+for digit in continued_fraction(lambda k: 1,
+                                lambda k: 1, 10):
+    print(digit, end='')
+"""

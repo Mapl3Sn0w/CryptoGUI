@@ -1,0 +1,207 @@
+
+import java.util.Arrays;
+
+public class ArraySets {
+
+	public static void main(String[] args) {
+		
+		int NumItems = 30;
+		int NumSubItems = 3;
+		String Solution = null;
+		String Seperator = " ";
+		
+		int[] a = new int[NumItems];
+		int Index[] = new int [NumItems];
+		boolean start = true;
+		
+		for(int i=0;i<NumItems;i++){
+			a[i]=0;
+			Index[i]=0;
+		}
+		
+		String Artist[][] = new String [NumItems][NumSubItems];
+		String Order[] = new String [NumItems];
+		
+		
+		Artist[0][0] = null;
+		Artist[0][1] = null;
+		Artist[0][2] = null;
+		
+		Artist[1][0] = null;
+		Artist[1][1] = null;
+		Artist[1][2] = null;
+		
+		Artist[2][0] = null;
+		Artist[2][1] = null;
+		Artist[2][2] = null;
+		
+		Artist[3][0] = null;
+		Artist[3][1] = null;
+		Artist[3][2] = null;
+		
+		Artist[4][0] = null;
+		Artist[4][1] = null;
+		Artist[4][2] = null;
+		
+		Artist[5][0] = null;
+		Artist[5][1] = null;
+		Artist[5][2] = null;
+		
+		Artist[6][0] = null;
+		Artist[6][1] = null;
+		Artist[6][2] = null;
+		
+		Artist[7][0] = null;
+		Artist[7][1] = null;
+		Artist[7][2] = null;
+		
+		Artist[8][0] = null;
+		Artist[8][1] = null;
+		Artist[8][2] = null;
+		
+		Artist[9][0] = null;
+		Artist[9][1] = null;
+		Artist[9][2] = null;
+		
+		Artist[10][0] = null;
+		Artist[10][1] = null;
+		Artist[10][2] = null;
+		
+		Artist[11][0] = null;
+		Artist[11][1] = null;
+		Artist[11][2] = null;
+		
+		Artist[12][0] = null;
+		Artist[12][1] = null;
+		Artist[12][2] = null;
+		
+		Artist[13][0] = null;
+		Artist[13][1] = null;
+		Artist[13][2] = null;
+		
+		Artist[14][0] = null;
+		Artist[14][1] = null;
+		Artist[14][2] = null;
+		
+		Artist[15][0] = null;
+		Artist[15][1] = null;
+		Artist[15][2] = null;
+		
+		Artist[16][0] = null;
+		Artist[16][1] = null;
+		Artist[16][2] = null;
+		
+		Artist[17][0] = null;
+		Artist[17][1] = null;
+		Artist[17][2] = null;
+		
+		Artist[18][0] = null;
+		Artist[18][1] = null;
+		Artist[18][2] = null;
+		
+		Artist[19][0] = null;
+		Artist[19][1] = null;
+		Artist[19][2] = null;
+		
+		Artist[20][0] = null;
+		Artist[20][1] = null;
+		Artist[20][2] = null;
+	
+		Artist[21][0] = null;
+		Artist[21][1] = null;
+		Artist[21][2] = null;
+		
+		Artist[22][0] = null;
+		Artist[22][1] = null;
+		Artist[22][2] = null;
+		
+		Artist[23][0] = null;
+		Artist[23][1] = null;
+		Artist[23][2] = null;
+		
+		Artist[24][0] = null;
+		Artist[24][1] = null;
+		Artist[24][2] = null;
+		
+		Artist[25][0] = null;
+		Artist[25][1] = null;
+		Artist[25][2] = null;
+		
+		Artist[26][0] = null;
+		Artist[26][1] = null;
+		Artist[26][2] = null;
+		
+		Artist[27][0] = null;
+		Artist[27][1] = null;
+		Artist[27][2] = null;
+
+		Artist[28][0] = null;
+		Artist[28][1] = null;
+		Artist[28][2] = null;
+		
+		Artist[29][0] = null;
+		Artist[29][1] = null;
+		Artist[29][2] = null;
+		
+		for(int i=0;i<NumItems;i++){
+			for(int j=0;j<NumSubItems;j++){
+
+				if(Artist[i][j]==null){
+					Index[i]=j;
+					
+					break;	
+				}else if(Artist[i][NumSubItems-1]!=null && j==NumSubItems-1){
+					Index[i]=NumSubItems;
+					
+				}
+				
+			}
+		}
+		
+		for(int z=0;z<1000;z++){
+			
+			for(int i=0;i<NumItems;i++){
+					
+					Order[i] = Artist[i][a[i]];
+					
+			}
+		
+			//sort Order array
+			Arrays.sort(Order);
+			
+			for(int i=0;i<NumItems;i++){
+				
+				if(i==0){
+					Solution = Order[i];
+
+				}else if(i>0){
+					Solution = Solution + Seperator + Order[i];
+					
+				}
+						
+			}
+	
+			if(Solution.toLowerCase().contains("null")==false){
+				System.out.print(Solution);
+				System.out.print(System.getProperty("line.separator"));
+			}
+			
+			a[0]=a[0]+1;
+			
+			//this just iterates to next series or exits if finished
+			for(int k=0;k<NumItems;k++){
+				
+				if(k==NumItems-1 && a[k]>Index[k]-1){
+					 System.exit(0);
+				}else if(k<NumItems-1 && a[k]>Index[k]-1){
+					a[k]=0;
+					a[k+1]=a[k+1]+1;
+				}
+				
+			}
+		
+		}		
+			
+	}
+	
+}

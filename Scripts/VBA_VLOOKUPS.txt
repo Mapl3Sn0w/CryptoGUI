@@ -1,0 +1,20 @@
+Function VlookupS(lookup As Variant, table As Range, row As Integer, index As Integer) As Variant
+
+Dim intCount As Integer
+
+intCount = 1
+
+For Each cell In table.Columns(1).Cells
+    If cell.Value = lookup Then
+        If intCount = index Then
+            VlookupS = cell.Offset(0, row - 1).Value
+            Exit Function
+        Else
+            intCount = intCount + 1
+        End If
+    End If
+Next cell
+
+VlookupS = ""
+
+End Function
