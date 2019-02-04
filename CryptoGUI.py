@@ -18,8 +18,10 @@ try:
     import os
     import sys
     import time
+    
     import ImageXOR as IMIX
-     
+    import CubeSlices as Cube
+    
 except ImportError:
     print('You need to import tkinter and PIL')
     time.sleep(5)
@@ -29,6 +31,32 @@ root=tk.Tk()
 root.title("Crypto GUI")
 root.geometry("1600x1600")
 
+class CheckOpenWindow():
+    def OpenXorWin(self):
+    #def OpenXorWin(self,root):
+        #IMIX.Xoring().XorWin(root)
+        IMIX.Xoring().XorWin()
+        """
+        checkFrames = []
+        for val,key in root.children.items():
+            if isinstance(key,tk.Frame):                           
+                checkFrames.append(str(key))
+        
+        if not(any("xoring" in x for x in checkFrames)):
+            IMIX.Xoring().XorWin(root)
+        """
+
+    def OpenCubeWin(self,root):
+        Cube.CubeSlices().CS(root)
+        """
+        checkFrames = []
+        for val,key in root.children.items():
+            if isinstance(key,tk.Frame):                           
+                checkFrames.append(str(key))
+        
+        if not(any("xoring" in x for x in checkFrames)):
+            IMIX.Xoring().XorWin(root)
+        """
 #add buttons in main frame
 buttonExit = ttk.Button(root, text="Exit", command=lambda: sys.exit())
 buttonExit.grid(sticky='E',row=1,column=0)
@@ -56,10 +84,22 @@ tab_control.add(tabAbout, text='About', padding='1', state='normal')
 
 tab_control.grid(sticky='N',row=0,column=0)
 
-#Add tool button in tab for programs
+#Add tool button in tab
 buttonImgLogicalGates= ttk.Button(tabTools, text="Applying logical gates on images",
-                     command=lambda: IMIX.Xoring().XorWin(root))
-buttonImgLogicalGates.grid(sticky='W',row=0,column=0)
+                     command=lambda: CheckOpenWindow().OpenXorWin())
+buttonImgLogicalGates.grid(sticky='NSEW',row=1,column=0)
+
+"""
+#Add tool button in tab
+buttonCubes= ttk.Button(tabTools, text="Cube visualization and cube slicing",
+                     command=lambda: CheckOpenWindow().OpenCubeWin(root))
+buttonCubes.grid(sticky='NSEW',row=2,column=0)
+"""
+
+#Setting widths / heights of cells in Tools tab
+tabTools.grid_rowconfigure(0, minsize=10)
+tabTools.grid_columnconfigure(0, minsize=200)
+tabTools.grid_columnconfigure(1, minsize=300)
 
 class InitCheckList:
     def __init__(self): 
@@ -189,7 +229,7 @@ class InitAbout:
         AboutLine4.grid(sticky="W",row=5, column=0)
         AboutLine4.config(font=("Courier",25))
         
-        AboutLine5 = ttk.Label(tabAbout, text="Last modified on: 2019-01-27")
+        AboutLine5 = ttk.Label(tabAbout, text="Last modified on: 2019-02-03")
         AboutLine5.grid(sticky="W",row=6, column=0)
         AboutLine5.config(font=("Courier",25))
         
@@ -208,7 +248,6 @@ class InitAbout:
         AboutLine9 = ttk.Label(tabAbout, text="Twitter: @mapl3Sn0w")
         AboutLine9.grid(sticky="W",row=10, column=0)
         AboutLine9.config(font=("Courier",10))
-
 
 list_of_lists = []
 with open('Tables/Checklist.txt') as f:
