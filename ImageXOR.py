@@ -75,6 +75,7 @@ class Xoring(tk.Frame):
                 RunErrorIO(self)
             else:
                 RunOn(self)
+                time.sleep(1)
                 img=[]
                 for name in os.listdir(IPath):
                     if name.endswith(".png"):    

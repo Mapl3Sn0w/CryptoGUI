@@ -20,7 +20,8 @@ try:
     import time
     
     import ImageXOR as IMIX
-    import CubeSlices as Cube
+    import WifCombos as WIFC
+    import LoadTools as TOOLS
     
 except ImportError:
     print('You need to import tkinter and PIL')
@@ -45,18 +46,20 @@ class CheckOpenWindow():
         if not(any("xoring" in x for x in checkFrames)):
             IMIX.Xoring().XorWin(root)
         """
-
-    def OpenCubeWin(self,root):
-        Cube.CubeSlices().CS(root)
-        """
-        checkFrames = []
-        for val,key in root.children.items():
-            if isinstance(key,tk.Frame):                           
-                checkFrames.append(str(key))
         
-        if not(any("xoring" in x for x in checkFrames)):
-            IMIX.Xoring().XorWin(root)
-        """
+    def OpenWifWin(self):
+        WIFC.Combinations().WifCombosWin()
+        
+def LoadX(toolNum):
+    TOOLS.LoadTools().RunX(toolNum)
+    
+def LoadI(toolNum):
+    def switch(item):
+        if item==0: CheckOpenWindow().OpenXorWin()
+        elif item==1: CheckOpenWindow().OpenWifWin()
+        
+    switch(toolNum)
+    
 #add buttons in main frame
 buttonExit = ttk.Button(root, text="Exit", command=lambda: sys.exit())
 buttonExit.grid(sticky='E',row=1,column=0)
@@ -84,22 +87,84 @@ tab_control.add(tabAbout, text='About', padding='1', state='normal')
 
 tab_control.grid(sticky='N',row=0,column=0)
 
-#Add tool button in tab
-buttonImgLogicalGates= ttk.Button(tabTools, text="Applying logical gates on images",
-                     command=lambda: CheckOpenWindow().OpenXorWin())
-buttonImgLogicalGates.grid(sticky='NSEW',row=1,column=0)
+#############################################################################
+#Add a series of buttons for external tools
+NoXTools=12
+XTool=[[] for k in range(0,NoXTools)]
+LabelXTool=[[] for k in range(0,NoXTools)]
+NameXTool=[[] for k in range(0,NoXTools)]
+DescriptionXTool=[[] for k in range(0,NoXTools)]
+for iterNumX in range(0,NoXTools):
+    NameXTool[iterNumX]=StringVar()
+    DescriptionXTool[iterNumX]=StringVar()
+    
+    XTool[iterNumX]=ttk.Button(tabTools,textvariable=NameXTool[iterNumX],command=lambda iterNumX=iterNumX:LoadX(iterNumX)).grid(sticky='NSEW',row=iterNumX+2,column=4)
+    LabelXTool[iterNumX]=ttk.Label(tabTools,textvariable=DescriptionXTool[iterNumX]).grid(sticky='NSEW',row=iterNumX+2,column=5)
 
-"""
-#Add tool button in tab
-buttonCubes= ttk.Button(tabTools, text="Cube visualization and cube slicing",
-                     command=lambda: CheckOpenWindow().OpenCubeWin(root))
-buttonCubes.grid(sticky='NSEW',row=2,column=0)
-"""
+NameXTool[0].set("Color Pix")
+NameXTool[1].set("Hash Knife")
+NameXTool[2].set("Image to CSV")
+NameXTool[3].set("Midi Editor 1")
+NameXTool[4].set("Midi Editor 2")
+NameXTool[5].set("Nonogram solver")
+NameXTool[6].set("OCR Reader")
+NameXTool[7].set("OpenPuff")
+NameXTool[8].set("PNG Analyser")
+NameXTool[9].set("Steganabara")
+NameXTool[10].set("Stegsolve")
+NameXTool[11].set("Threatstego")
+#NameXTool[12].set("X-Ripper")
+
+DescriptionXTool[0].set("Desktop screen pixel viewer")
+DescriptionXTool[1].set("Hash cracking tool")
+DescriptionXTool[2].set("Image to CSV / CSV to Image transformation tool upto 1000x1000 images")
+DescriptionXTool[3].set("View tracks of midi type file")
+DescriptionXTool[4].set("View music sheet of midi type file (with piano playing)")
+DescriptionXTool[5].set("Black and white nonogram solver")
+DescriptionXTool[6].set("Line and character extractor from images")
+DescriptionXTool[7].set("Steganography tool")
+DescriptionXTool[8].set("View chunks, validate image size, validate CRC chunks (PNG files only)")
+DescriptionXTool[9].set("Image analysis tool")
+DescriptionXTool[10].set("Image analysis tool")
+DescriptionXTool[11].set("Steganography tool")
+#DescriptionXTool[12].set("Search files and libraries for imbedded file types")
+##################################################################################
+
+#############################################################################
+#Add a series of buttons for internal tools
+NoITools=1
+ITool=[[] for k in range(0,NoITools)]
+LabelITool=[[] for k in range(0,NoITools)]
+NameITool=[[] for k in range(0,NoITools)]
+DescriptionITool=[[] for k in range(0,NoITools)]
+for iterNumI in range(0,NoITools):
+    NameITool[iterNumI]=StringVar()
+    DescriptionITool[iterNumI]=StringVar()
+    
+    ITool[iterNumI]=ttk.Button(tabTools,textvariable=NameITool[iterNumI],command=lambda iterNumI=iterNumI:LoadI(iterNumI)).grid(sticky='NSEW',row=iterNumI+2,column=1)
+    LabelITool[iterNumI]=ttk.Label(tabTools,textvariable=DescriptionITool[iterNumI]).grid(sticky='NSEW',row=iterNumI+2,column=2)
+
+NameITool[0].set("Image XOR")
+#NameITool[1].set("WIF validation")
+
+DescriptionITool[0].set("Applying logical gates on images")
+#DescriptionITool[1].set("Finding public addresses from valid WIF addresses")
+
+##################################################################################
+
+#Header labels
+ttk.Label(tabTools,font=40,text="Internal Tools").grid(sticky='NSEW',row=1,column=1)
+ttk.Label(tabTools,font=40,text="External Tools").grid(sticky='NSEW',row=1,column=4)
 
 #Setting widths / heights of cells in Tools tab
 tabTools.grid_rowconfigure(0, minsize=10)
-tabTools.grid_columnconfigure(0, minsize=200)
-tabTools.grid_columnconfigure(1, minsize=300)
+tabTools.grid_rowconfigure(1, minsize=40)
+
+tabTools.grid_columnconfigure(0, minsize=50)
+tabTools.grid_columnconfigure(1, minsize=200)
+tabTools.grid_columnconfigure(3, minsize=50)
+tabTools.grid_columnconfigure(4, minsize=200)
+
 
 class InitCheckList:
     def __init__(self): 
