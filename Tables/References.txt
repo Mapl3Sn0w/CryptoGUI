@@ -1,5 +1,6 @@
-Alphabets,Hebrew,https://en.wikipedia.org/wiki/Gematria
+﻿Alphabets,Hebrew,https://en.wikipedia.org/wiki/Gematria
 Alphabets,Malachim,https://translate.google.com/translate?hl=en&sl=de&u=http://kryptografie.de/kryptografie/chiffre/malachim.htm&prev=search
+Alphabet,Fictional,http://omniglot.com/conscripts/fictional.htm#other
 Barcode,Barcode decoder,https://zxing.org/w/decode.jspx
 Barcode,Create barcode from known input and more,https://barcode.tec-it.com/en
 Barcode,List of barcodes,https://www.scandit.com/types-barcodes-choosing-right-barcode/

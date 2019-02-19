@@ -1,2 +1,8 @@
-(Blank),0
-Futurama (AL1 aka Alienese),1
+All,All,All
+Futurama,Alienese 1,Futurama_Alienese1
+Halo,Covenant,Halo_Covenant
+Lego,Matoran/Bionicle,Lego_Matoran-Bionicle
+Commander Keen,SGA,CommanderKeen_SGA
+Stargate,The Ancients,Stargate_TheAncients
+Magical,Theban,Magical_Theban
+Utopia,Utopian,Utopia_Utopian
