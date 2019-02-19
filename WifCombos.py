@@ -4,6 +4,32 @@ Created on 4 févr. 2019
 @author: Mapl3Sn0w
 '''
 
+#Proper way to validate cell contents
+'''
+import re
+
+def validate(possible_new_value):
+    if re.match(r'^[0-9a-fA-F]*$', possible_new_value):
+        return True
+    return False
+
+entry = tk.Entry(root, validate="key", 
+                 validatecommand=(root.register(validate), '%P'))
+'''
+
+
+
+#Proper way to allow copy-paste-cut
+'''
+def paste(self):
+self.entry.event_generate('<Control-v>')
+def cut(self):
+self.entry.event_generate('<Control-x>')
+def copy(self):
+self.entry.event_generate('<Control-c>')
+'''
+
+
 try:
     import tkinter as tk
     from tkinter import ttk
@@ -24,6 +50,9 @@ try:
     import ecdsa
     #from pycoin.key import key_from_text
     
+    import LoadMessages as x
+    SMS = x.Messages()
+    
     import itertools
 
 except ImportError:
@@ -39,36 +68,6 @@ class Combinations(tk.Frame):
         
         #Type of WIF, 0: K,L... / 1: 5...
         self.WifType = tk.IntVar(0)        
-        
-        """
-        1 character limit in entry box is not what we want
-        
-        def character_limit(EntryStr):
-            if len(EntryStr.get()) > 0:
-                if any(EntryStr.get()[-1] in x for x in bs58):
-                    EntryStr.set(EntryStr.get()[-1])
-                else:
-                    if len(EntryStr.get()) == 2:
-                        EntryStr.set(EntryStr.get()[0])
-                    elif len(EntryStr.get) == 1:
-                        EntryStr.set("")
-                    elif len(EntryStr.get()) == 0:
-                        pass
-        """
-        
-        #Messages for status of program###########################
-        def RunStart(self):
-            wifRun.set("Status: Operation not started...")
-
-        def RunOn(self):
-            wifRun.set("Status: Tool activated, please wait...")
-            
-        def RunFinish(self):
-            wifRun.set("Status: Operation finished")
-        
-        def RunLoad(self):
-            wifRun.set("Status: List loaded")
-        ##########################################################
         
         def ripemd160(x):
             d = hashlib.new('ripemd160')
@@ -87,7 +86,7 @@ class Combinations(tk.Frame):
             elif self.WifType.get() == 0:
                 itemEntry[51].config(state='enabled')
         
-            RunStart(self)
+            SMS.RunStart(wifRun)
             
         def LoadWif(self):
             
@@ -103,11 +102,11 @@ class Combinations(tk.Frame):
                     Section[n].set(item)
                     n=n+1
             
-            RunLoad(self)
+            SMS.RunListLoad(wifRun)
             
         def RunWifCheck(self):
             
-            RunOn(self)
+            SMS.RunOn(wifRun)
             
             if self.WifType.get()==0: 
                 lenCheck=52
@@ -163,7 +162,7 @@ class Combinations(tk.Frame):
                     pass
                     #print("Error in testing WIF" + " | " + JoinedStrWIF)
             
-            RunFinish(self)
+            SMS.RunFinish(wifRun)
             
         bs58 = ('1','2','3','4','5','6','7','8','9',
                  'A','B','C','D','E','F','G','H','J','K','L','M','N','P','Q','R','S','T','U','V','W','X','Y','Z',
@@ -175,11 +174,11 @@ class Combinations(tk.Frame):
         wifRun = StringVar()
         
         #Initialize status message
-        RunStart(self)
+        SMS.RunStart(wifRun)
         
-        itemLabel=[[] for k in range(0,52)]
-        itemEntry=[[] for k in range(0,52)]
-        Section=[[] for k in range(0,52)]
+        itemLabel=[[] for _ in range(0,52)]
+        itemEntry=[[] for _ in range(0,52)]
+        Section=[[] for _ in range(0,52)]
         
         for iterNum in range(0,52):
             CharNum.append(iterNum)
