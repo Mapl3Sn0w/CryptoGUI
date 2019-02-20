@@ -6,7 +6,7 @@ VBA, VBA_A2N, Transform letters into numbers (left to right)
 VBA, VBA_CONCATENATERANGE, Concatenate cells in range by row or column
 PYTHON, PYTHON_WIFtoAddForBTC,Transforms array of possible WIF addresses into public addresses to check for solutions
 PYTHON, PYTHON_PKtoAddForETH, Transform PK into ETH address
-PYTHON, PYTHON_XorAndOr, Compare series of images (Xor,And,Or) and save new files
+PYTHON, PYTHON_XorAndOr, Compare series of images (Xor/And/Or) and save new files
 PYTHON, PYTHON_RGBPixels, Extract different pixel colors and create new image for each RGB set
 PYTHON, PYTHON_PIIndex, Find PI index of series of numbers
 JAVA,JAVA_HexToWif,Transform hex pk format to WIF format (bitcoin)
