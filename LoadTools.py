@@ -1,9 +1,3 @@
-'''
-Created on 5 févr. 2019
-
-@author: Mapl3Sn0w
-'''
-
 import subprocess
 
 class LoadTools:

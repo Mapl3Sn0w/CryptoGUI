@@ -144,7 +144,7 @@ DescriptionXTool[11].set("Steganography tool")
 
 #############################################################################
 #Add a series of buttons for internal tools
-NbITools=2
+NbITools=3
 
 ITool=[[] for k in range(0,NbITools)]
 LabelITool=[[] for k in range(0,NbITools)]
@@ -163,11 +163,11 @@ for iterNumI in range(0,NbITools):
 
 NameITool[0].set("Image XOR")
 NameITool[1].set("WIF validation")
-#NameITool[2].set("RGB sets")
+NameITool[2].set("RGB sets")
 
 DescriptionITool[0].set("Applying logical gates on images")
 DescriptionITool[1].set("Validating WIFs from combinations")
-#DescriptionITool[2].set("Create individual images from RGB sets")
+DescriptionITool[2].set("Create individual images from RGB sets")
 
 ##################################################################################
 
@@ -238,7 +238,7 @@ class InitAlphabets:
         
         #Hide the columns following the first one
         alphatree["displaycolumns"]=('col1')
-        
+                
         #Define result of clicking on line in alphatree
         def selectItem(a):
             curItem = alphatree.focus()
@@ -271,23 +271,39 @@ class InitAlphabets:
 class InitScripts:
     def __init__(self):
         
+        self.CodeType = tk.IntVar()
+        Codes=['VBA','PYTHON','JAVA']
+        
+        #Add radiobuttons for coding language
+        rbVBA = ttk.Radiobutton(tabScripts,text="VBA",variable=self.CodeType,value=0,command=lambda:loadItem(self.CodeType.get()))
+        rbPython = ttk.Radiobutton(tabScripts,text="PYTHON",variable=self.CodeType,value=1,command=lambda:loadItem(self.CodeType.get()))
+        rbJava = ttk.Radiobutton(tabScripts,text="JAVA",variable=self.CodeType,value=2,command=lambda:loadItem(self.CodeType.get()))
+        
+        rbVBA.grid(sticky='W',row=0,column=0)
+        rbPython.grid(sticky='W',row=1,column=0)
+        rbJava.grid(sticky='W',row=2,column=0)
+    
+        #Initialize treeview widget for list of scripts    
         scripttree = ttk.Treeview(tabScripts)
         scripttree['columns'] = ('col1','col2')
         
-        scripttree.column('#0', width=200, anchor='w')
+        scripttree.column('#0', width=100, anchor='w')
         scripttree.heading('#0', text='Code type')
         
-        scripttree.column('col1', width=500, anchor='w')
+        scripttree.column('col1', width=200, anchor='w')
         scripttree.heading('col1', text='Name')
         
         scripttree.column('col2', width=500, anchor='w')
         scripttree.heading('col2', text='Description')
         
-        for elements in list_of_scripts:
-            arr_temp=[elements[1],elements[2]]
-            scripttree.insert('', 'end', text=elements[0], values = arr_temp)
+        def loadItem(Type):
+            scripttree.delete(*scripttree.get_children())
+            for elements in list_of_scripts:            
+                if elements[0] == Codes[Type]:
+                    arr_temp=[elements[1],elements[2]]    
+                    scripttree.insert('', 'end', text=elements[0], values = arr_temp)
       
-        scripttree.grid(sticky='W',row=1,column=1)
+        scripttree.grid(sticky='W',row=0,column=2,rowspan=3)
         
         def selectItem(a):
             curItem = scripttree.focus()
@@ -302,11 +318,19 @@ class InitScripts:
             T=tk.Text(tabScripts,width=154)
             T.insert(tk.END,f)
             
-            T.grid(sticky="W",row=3, column=1)
+            T.grid(sticky="W",row=4, column=2)
         
         #show script on item selection release
         scripttree.bind('<ButtonRelease-1>', selectItem)
-
+        
+        loadItem(0)
+        
+        tabScripts.grid_columnconfigure(0, minsize=100)
+        tabScripts.grid_columnconfigure(1, minsize=20)
+        tabScripts.grid_columnconfigure(2, minsize=100)
+        tabScripts.grid_columnconfigure(3, minsize=200)
+        tabScripts.grid_columnconfigure(4, minsize=500)
+        
 #Tab in root window for about details
 class InitAbout:
     def __init__(self):

@@ -1,24 +1,38 @@
-
 try:
     import tkinter as tk
     from tkinter import ttk
     from tkinter import filedialog
-    #from tkinter import font as tkfont
     from tkinter import StringVar
-    
+except:
+    print("tkinter import error")
+    raise SystemExit
+
+try:
     import os
-    #import sys
-    import time 
-        
+except:
+    print("os import error")
+    raise SystemExit
+
+try:
+    import time
+except:
+    print("time import error")
+    raise SystemExit
+
+try:        
+    from PIL import Image
     import imageio
     import matplotlib.image as mimg
+except: 
+    print("PIL/imageio/matplotlib import error")
+    raise SystemExit
 
-    import LoadMessages as x
-    SMS = x.Messages()
+try:
+    import LoadMessages as X
+    SMS = X.Messages()
  
 except ImportError:
-    print('You need to import tkinter and imageio')
-    time.sleep(5)
+    print('dependent file import error')
     raise SystemExit
 
 class Xoring(tk.Frame):
@@ -85,7 +99,9 @@ class Xoring(tk.Frame):
                 SMS.RunFinish(XorRun)
         
         SMS.RunStart(XorRun)
-        
+
+#FORMATING##############################################################################################################
+
         #Buttons to load input/output folders, set label to empty
         buttonInput= ttk.Button(topXor, text="Select input path",command=lambda: [AskInput(self),SMS.RunStart(XorRun)])
         buttonOutput= ttk.Button(topXor, text="Select output path",command=lambda: [AskOutput(self),SMS.RunStart(XorRun)])
