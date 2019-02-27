@@ -2,7 +2,7 @@ File,Obtain basic data on a file,Exif
 File,Find hidden trailer data in hex, HxD
 File,Compare hex data between two files, HxD
 File,Find hidden PK (zip file),Foremost(linux)
-Image,Extract each pixel color into new image individually,See scripts section
+Image,Extract each pixel color into new image individually,See Tools section
 Image,Count number of pixels for each hex color,See scripts section
 Image,Find hidden data in hex colors,ColorPix
 Image,Analyse raw data of image file,rawpixels.net
@@ -13,6 +13,7 @@ Image,Find hidden data in LSB,Stegsolve
 Image,Pixel pattern (morse/ternary),N/A
 Image,Hash of image file,N/A
 Image,Twisted pairs (darkred/ bright red/ white/ black/ orange/ blue/ yellow/ pink/ grey/ green), wikipedia
+Image,Check identical colors in index of colors,PhotoShop or other
 Image,Divide image into equal areas (grid),N/A
 Image,8 directions,Semaphore
 Image,Time on clocks,Semaphore
@@ -33,7 +34,7 @@ String,Three types of characters in entire string - consider morse or ternary,N/
 String,Two types of characters in entire string - consider binary or Bacon,N/A
 String,U2FsdGVkX1 represents Salted_ in based64,OpenSSL AES-CBC
 String,Periodic table (convert to numbers),ptable
-String,Shift all combinations,N/A
+String,Shift all combinations (all types of rot),N/A
 String,Take first/last character of every sentence to make new sentence,N/A
 Numbers-only,Index in PI/E/Sqrt(2)/PHI,subidiom
 Numbers-only,Convert from/to every base,cyberchef
