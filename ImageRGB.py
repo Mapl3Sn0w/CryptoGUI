@@ -61,8 +61,13 @@ class ImageRGB(tk.Frame):
             folder_selected = folder_selected + "/"
             FolderOutput.set(folder_selected)
             
-        def LoadRGB(IType,IFile,OPath):    
+        def OpenRGB(OType,IFile,OPath):    
             #OPENRGB #########################################################
+            list_RGB = None
+            im = None
+            width = None
+            height = None
+            
             if (os.path.isfile(IFile)==False or os.path.isdir(OPath)==False):
                 SMS.RunErrorIO(RGBRun)
             elif IFile.endswith(".png")==False:
@@ -86,12 +91,15 @@ class ImageRGB(tk.Frame):
                             if RGB not in list_RGB:
                                 list_RGB.append(RGB)
                 except:
-                    SMS.RunErrorLoad(RGBRun)              
-                                
+                    SMS.RunErrorLoad(RGBRun)
+            
+            LoadRGB(list_RGB,im,width,height,OType,OPath)
+                             
+        def LoadRGB(list_RGB,im,width,height,OType,OPath):
                 #LOADRGB #################################################
-                if IType==0:
+                if OType==0:
                     SMS.RunOptionUnavailable(RGBRun)
-                elif IType==1:
+                elif OType==1:
                     im_new=[]
                     for i in range(0,len(list_RGB)):
                         im_new.append(i)
@@ -139,7 +147,7 @@ class ImageRGB(tk.Frame):
         SaveTextO = ttk.Label(topRGB, text="OUTPUT PATH:")
         
         #Run tool with selected directories
-        buttonRunRGB = ttk.Button(topRGB, text="Run tool",command=lambda: [SMS.RunStart(RGBRun),LoadRGB(self.OType.get(),FileInput.get(),FolderOutput.get())])
+        buttonRunRGB = ttk.Button(topRGB, text="Run tool",command=lambda: [SMS.RunStart(RGBRun),OpenRGB(self.OType.get(),FileInput.get(),FolderOutput.get())])
         
         #Variable label based on status of tool
         RGBRunText = ttk.Label(topRGB, textvariable=RGBRun)

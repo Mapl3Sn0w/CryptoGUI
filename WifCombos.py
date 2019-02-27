@@ -62,6 +62,7 @@ except ImportError:
 
 class Combinations(tk.Frame):
     def WifCombosWin(self):
+        
         topWifCombos = tk.Toplevel(self)
         topWifCombos.title("Validating WIF or finding public addresses from WIF")
         topWifCombos.geometry("1600x1600")
@@ -183,7 +184,7 @@ class Combinations(tk.Frame):
         for iterNum in range(0,52):
             CharNum.append(iterNum)
             Section[iterNum]=StringVar()
-
+        
         #For now i can't find a better way
         Section[0].trace("w", lambda *args: character_check(Section[0]))
         Section[1].trace("w", lambda *args: character_check(Section[1]))

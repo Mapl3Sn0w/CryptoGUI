@@ -25,7 +25,8 @@ try:
     import ImageXOR as IMIX
     import WifCombos as WIFC
     import LoadTools as TOOLS
-    import ImageRGB as RGBI
+    import ImageRGB as IRGB
+    import TextAreciboTransform as TXTAT
     
 except ImportError:
     print('dependent file import error')
@@ -57,7 +58,10 @@ class CheckOpenWindow():
         WIFC.Combinations().WifCombosWin()
         
     def OpenRGBWin(self):
-        RGBI.ImageRGB().IndividualRGB()
+        IRGB.ImageRGB().IndividualRGB()
+        
+    def OpenAreciboWin(self):
+        TXTAT.Arecibo().AreciboTransformation()
 
 #Goto class in other .py file to load external tool in subdirectory
 def LoadX(toolNum):
@@ -69,6 +73,7 @@ def LoadI(toolNum):
         if item==0: CheckOpenWindow().OpenXorWin()
         elif item==1: CheckOpenWindow().OpenWifWin()
         elif item==2: CheckOpenWindow().OpenRGBWin()
+        elif item==3: CheckOpenWindow().OpenAreciboWin()
         
     switch(toolNum)
     
@@ -101,7 +106,7 @@ tab_control.grid(sticky='N',row=0,column=0)
 
 #############################################################################
 #Add a series of buttons for external tools
-NoXTools=12
+NoXTools=14
 XTool=[[] for k in range(0,NoXTools)]
 LabelXTool=[[] for k in range(0,NoXTools)]
 NameXTool=[[] for k in range(0,NoXTools)]
@@ -125,7 +130,8 @@ NameXTool[8].set("PNG Analyser")
 NameXTool[9].set("Steganabara")
 NameXTool[10].set("Stegsolve")
 NameXTool[11].set("Threatstego")
-#NameXTool[12].set("X-Ripper")
+NameXTool[12].set("CyberChef")
+NameXTool[13].set("IAN COLEMAN - BTC Tool")
 
 DescriptionXTool[0].set("Desktop screen pixel viewer")
 DescriptionXTool[1].set("Hash cracking tool")
@@ -139,12 +145,13 @@ DescriptionXTool[8].set("View chunks, validate image size, validate CRC chunks (
 DescriptionXTool[9].set("Image analysis tool")
 DescriptionXTool[10].set("Image analysis tool")
 DescriptionXTool[11].set("Steganography tool")
-#DescriptionXTool[12].set("Search files and libraries for imbedded file types")
+DescriptionXTool[12].set("CyberChef (open locally on computer)")
+DescriptionXTool[13].set("Convert WIF/PK to the corresponding public address (open locally on computer)")
 ##################################################################################
 
 #############################################################################
 #Add a series of buttons for internal tools
-NbITools=3
+NbITools=4
 
 ITool=[[] for k in range(0,NbITools)]
 LabelITool=[[] for k in range(0,NbITools)]
@@ -164,10 +171,12 @@ for iterNumI in range(0,NbITools):
 NameITool[0].set("Image XOR")
 NameITool[1].set("WIF validation")
 NameITool[2].set("RGB sets")
+NameITool[3].set("Arecibo-esque transform")
 
 DescriptionITool[0].set("Applying logical gates on images")
 DescriptionITool[1].set("Validating WIFs from combinations")
 DescriptionITool[2].set("Create individual images from RGB sets")
+DescriptionITool[3].set("Create individual text files from combinations of arecibo-esque style formatting")
 
 ##################################################################################
 

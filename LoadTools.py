@@ -1,4 +1,5 @@
 import subprocess
+import webbrowser
 
 class LoadTools:
     def RunX(self,toolNum):   
@@ -16,8 +17,7 @@ class LoadTools:
             elif item==9: subprocess.call(['java', '-jar', '.\\XTools\\steganabara-1.1.1.jar'])
             elif item==10: subprocess.call(['java', '-jar', '.\\XTools\\Stegsolve.jar'])
             elif item==11: subprocess.call(['.\\XTools\\threatstego.exe'])
-            
-            #elif item==X:
-            #    subprocess.call(['.\\XTools\\X-Ripper.exe','.\\XTools\\X-Ripper.ini'])
+            elif item==12: webbrowser.open('.\\XTools\\CyberChef.htm')
+            elif item==13: webbrowser.open('.\\XTools\\IANCOLEMAN_BitcoinKeyCompressionTool.html')
         
         switch(toolNum)
