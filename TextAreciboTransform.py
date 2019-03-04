@@ -28,6 +28,11 @@ except:
     raise SystemExit
 
 try:
+    import numpy
+except:
+    print("numpy import error")
+
+try:
     import string
     from string import whitespace, punctuation, digits, ascii_uppercase, ascii_lowercase
 except:
@@ -46,18 +51,57 @@ class Arecibo(tk.Frame):
     def AreciboTransformation(self):
         topAT = tk.Toplevel(self)
         topAT.title("Applying Arecibo style transformation for all combinations")
-        topAT.geometry("800x200")
+        topAT.geometry("900x280")
         
         #Set variable input, output path string & operation done text
         FileInput = StringVar()
         FolderOutput = StringVar()
         ATRun = StringVar()
+        BaseXVar = StringVar()
+        BaseXCharVar = StringVar()
         self.oWS = tk.IntVar(0)
         self.oP = tk.IntVar(0)
         self.oD = tk.IntVar(0)
         self.oU = tk.IntVar(0)
         self.oL = tk.IntVar(0)
+        self.ExtractionType = tk.IntVar(0)
         
+        basedigits = ['2','3','4']
+        
+        def BaseSelection(self):
+            if self.ExtractionType.get() == 1:
+                    BaseXEntry.delete(0,tk.END)
+                    BaseXCharEntry.delete(0,tk.END)
+                    BaseXEntry.config(state='disabled')
+                    BaseXCharEntry.config(state='disabled')
+            elif self.ExtractionType.get() == 0:
+                    BaseXEntry.config(state='enabled')
+                    BaseXCharEntry.config(state='enabled')
+            
+            SMS.RunStart(ATRun)
+        
+        def removedupes(x):
+            return list(dict.fromkeys(x))
+        
+        def character_check_1(EntryStr):
+            if len(EntryStr.get())>0:
+                if not(any(EntryStr.get()[-1] in x for x in basedigits)):
+                    EntryStr.set(EntryStr.get()[:-1])
+                if len(EntryStr.get())>1:
+                    EntryStr.set(EntryStr.get()[1:])
+                    
+                character_check_2(BaseXCharVar)
+
+        def character_check_2(EntryStr):
+            if len(EntryStr.get())>0:
+                
+                BaseLen = int(BaseXVar.get())
+                
+                if len(EntryStr.get())>BaseLen:
+                    EntryStr.set(EntryStr.get()[:BaseLen])
+
+                EntryStr.set(''.join(removedupes(EntryStr.get())))
+            
         def AskInput(self):
             file_selected = filedialog.askopenfile()
             topAT.lift()
@@ -83,6 +127,22 @@ class Arecibo(tk.Frame):
                     factors_list.append([i,n//i])
             return factors_list
         
+        def Structured_image(s,W,H):
+            new_imagearray=numpy.chararray((W, H))  
+            x,y=0,0
+            
+            for position in range(len(s)):
+                
+                if position % W == 0 and position !=0:
+                    y+=1
+                    x=0
+                elif position !=0:
+                    x+=1
+             
+                new_imagearray[x][y]=s[position]
+                
+            return new_imagearray
+        
         def Structured_string(s,W):
             new_string=''
             
@@ -94,6 +154,67 @@ class Arecibo(tk.Frame):
                     new_string+=s[position]
         
             return new_string
+            
+        def BaseXArt(String_factors,StringJoin,OPath):
+            for BaseX_dimensions in String_factors:
+                for orientation in range(2):
+                    
+                    x_dim = BaseX_dimensions[abs(0-orientation)]
+                    y_dim = BaseX_dimensions[abs(1-orientation)]
+                         
+                    BaseColors = [(0,0,0),(255,255,255),(255,0,0),(255,255,0)]
+                    
+                    ColorScheme = int(BaseXVar.get())
+                    
+                    String_inclusions = list(BaseXCharVar.get())
+                    
+                    """
+                    #Exclude characters not in selected characters for baseX
+                    
+                    StringList = list(StringJoin)
+                    for position in range(len(StringList)):
+                        if not(StringList[position] in String_inclusions):
+                            StringList[position]=''
+                    
+                    StringJoin = ''.join(StringList)
+                    """
+                    
+                    string_array = Structured_image(StringJoin,x_dim,y_dim)
+                    
+                    OColor = BaseColors[:ColorScheme]
+                    
+                    #save txt to png file
+                    imgBaseX = Image.new('RGB', (x_dim, y_dim),(255,255,255))
+                    
+                    try:
+                        for y in range(y_dim):
+                            for x in range(x_dim):
+                                OBaseX = String_inclusions.index(string_array[x][y].decode('UTF-8'))
+                                imgBaseX.putpixel((x,y),OColor[OBaseX])
+                    except:
+                        imgBaseX.putpixel((x,y),(0,0,0))
+                               
+                    imgBaseX.save(OPath+'Test['+str(x_dim)+'-'+str(y_dim)+'].png')
+                    
+        def asciiArt(String_factors,StringJoin,OPath):
+            for ascii_dimensions in String_factors:
+                    for orientation in range(2):                       
+                        x_dim = ascii_dimensions[abs(0-orientation)]
+                        y_dim = ascii_dimensions[abs(1-orientation)]
+                    
+                        structured = Structured_string(StringJoin,x_dim)
+                         
+                        #save text to txt file
+                        txt_save = open(OPath+'Test['+str(x_dim)+'-'+str(y_dim)+'].txt', "w")
+                        txt_save.write(structured)
+                        txt_save.close()
+                               
+                        img = Image.new('RGB', (36+7*x_dim, 36+16*y_dim),(255,255,255))
+                        d = ImageDraw.Draw(img)
+                        d.text((20, 20), structured, fill=(0, 0, 0))
+                        
+                        #save txt to png file
+                        img.save(OPath+'Test['+str(x_dim)+'-'+str(y_dim)+'].png')
         
         def LoadAT(Exclusions,IFile,OPath):    
             if (os.path.isfile(IFile)==False or os.path.isdir(OPath)==False):
@@ -104,7 +225,7 @@ class Arecibo(tk.Frame):
                 s=''
                 with open (IFile, "r") as txtfile:
                     s=txtfile.read().replace('\n', '')
-
+                
                 String_factors = factors(len(s))
                 
                 Char_type = [whitespace,punctuation,digits,ascii_uppercase,ascii_lowercase]
@@ -120,27 +241,21 @@ class Arecibo(tk.Frame):
                         StringList[position]=''
                 
                 StringJoin = ''.join(StringList)
-              
-                for ascii_dimensions in String_factors:
-                        
-                    structured = Structured_string(StringJoin,ascii_dimensions[0])
-                    
-                    img = Image.new('RGB', (ascii_dimensions[0]*60, ascii_dimensions[1]*40),(255,255,255))
-                    d = ImageDraw.Draw(img)
-                    d.text((20, 20), structured, fill=(0, 0, 0))
-                    
-                    #save text to txt file
-                    txt_save = open(OPath+'Test['+str(ascii_dimensions[0])+'-'+str(ascii_dimensions[1])+'].txt', "w")
-                    txt_save.write(structured)
-                    txt_save.close()
-                    
-                    #save txt to png file
-                    img.save(OPath+'Test['+str(ascii_dimensions[0])+'-'+str(ascii_dimensions[1])+'].png')
+                
+                if self.ExtractionType.get()==0:
+                    #BaseX option
+                    call = BaseXArt(String_factors,StringJoin,OPath)
+                
+                elif self.ExtractionType.get()==1:
+                    #Ascii art option
+                    call = asciiArt(String_factors, StringJoin, OPath)
                 
                 SMS.RunFinish(ATRun)
         
         SMS.RunStart(ATRun)
-
+        
+        BaseXVar.trace("w", lambda *args: character_check_1(BaseXVar))
+        BaseXCharVar.trace("w", lambda *args: character_check_2(BaseXCharVar))
 #FORMATING##############################################################################################################
 
         #Buttons to load input/output folders, set label to empty
@@ -162,6 +277,15 @@ class Arecibo(tk.Frame):
         cbU = ttk.Checkbutton(topAT, text="Uppercase", variable=self.oU,command=lambda:SMS.RunStart(ATRun))
         cbL = ttk.Checkbutton(topAT, text="Lowercase", variable=self.oL,command=lambda:SMS.RunStart(ATRun))
         
+        #Type of extraction
+        ExtractionTypeText = ttk.Label(topAT, text="Pick the extraction type:")
+        rbBaseX = ttk.Radiobutton(topAT,text="Base X",variable=self.ExtractionType,value=0,command=lambda:[SMS.RunStart(ATRun),BaseSelection(self)])
+        rbAsciiArt = ttk.Radiobutton(topAT,text="Ascii Art",variable=self.ExtractionType,value=1,command=lambda:[SMS.RunStart(ATRun),BaseSelection(self)])
+        BaseXEntry = ttk.Entry(topAT,textvariable=BaseXVar)
+        BaseXCharEntry = ttk.Entry(topAT,textvariable=BaseXCharVar)
+        BaseXText = ttk.Label(topAT, text="Base (2,3 or 4):")
+        BaseXCharText = ttk.Label(topAT, text="Characters (no spaces):")
+        
         #Run tool with selected directories
         buttonRunAT = ttk.Button(topAT, text="Run tool",command=lambda: [SMS.RunStart(ATRun),LoadAT(Exclusions(self),FileInput.get(),FolderOutput.get())])
         
@@ -172,8 +296,8 @@ class Arecibo(tk.Frame):
         
         #Setting default column widths for topXor
         topAT.grid_columnconfigure(1, minsize=100)
-        topAT.grid_columnconfigure(2, minsize=100)
-        topAT.grid_columnconfigure(3, minsize=400)
+        topAT.grid_columnconfigure(2, minsize=150)
+        topAT.grid_columnconfigure(3, minsize=100)
         
         #Placing widgets on topXor frame
         buttonInput.grid(sticky='NSEW',row=0,column=0)
@@ -182,12 +306,23 @@ class Arecibo(tk.Frame):
         SaveTextO.grid(sticky='E',row=1, column=1)
         SaveInput.grid(sticky='W',row=0, column=2)
         SaveOutput.grid(sticky='W',row=1, column=2)
+        
         ExclusionText.grid(sticky='NSEW',row=2,column=0)
         cbWS.grid(sticky='NSEW',row=3,column=0)
         cbP.grid(sticky='NSEW',row=4,column=0)
         cbD.grid(sticky='NSEW',row=5,column=0)
         cbU.grid(sticky='NSEW',row=6,column=0)
         cbL.grid(sticky='NSEW',row=7,column=0)
-        buttonRunAT.grid(sticky='NSEW',row=8,column=0)
-        ATRunText.grid(sticky='NSEW',row=8, column=1,columnspan=3)
-        buttonExit.grid(sticky='NSEW',row=8,column=4)
+        
+        ExtractionTypeText.grid(sticky='NSEW',row=8,column=0)
+        BaseXText.grid(sticky='NSEW',row=8,column=1)
+        BaseXCharText.grid(sticky='NSEW',row=8,column=2)
+        rbBaseX.grid(sticky='NSEW',row=9,column=0)
+        BaseXEntry.grid(sticky='NSEW',row=9,column=1)
+        BaseXCharEntry.grid(sticky='NSEW',row=9,column=2)
+        rbAsciiArt.grid(sticky='NSEW',row=10,column=0)
+
+        
+        buttonRunAT.grid(sticky='NSEW',row=11,column=0)
+        ATRunText.grid(sticky='NSEW',row=11, column=1,columnspan=3)
+        buttonExit.grid(sticky='NSEW',row=11,column=4)
