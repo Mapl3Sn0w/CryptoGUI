@@ -1,39 +1,21 @@
-try:
-    import tkinter as tk
-    from tkinter import ttk
-    from tkinter import filedialog
-    from tkinter import StringVar
-except:
-    print("tkinter import error")
-    raise SystemExit
+import tkinter as tk
+from tkinter import ttk
+from tkinter import filedialog
+from tkinter import StringVar
+import os
+import time
+from PIL import Image
+import imageio
+import matplotlib.image as mimg
 
+#import external files########################################################
 try:
-    import os
-except:
-    print("os import error")
-    raise SystemExit
-
-try:
-    import time
-except:
-    print("time import error")
-    raise SystemExit
-
-try:        
-    from PIL import Image
-    import imageio
-    import matplotlib.image as mimg
-except: 
-    print("PIL/imageio/matplotlib import error")
-    raise SystemExit
-
-try:
-    import LoadMessages as X
-    SMS = X.Messages()
- 
+    from LoadMessages import * 
+        
 except ImportError:
     print('dependent file import error')
     raise SystemExit
+##############################################################################
 
 class Xoring(tk.Frame):
     def XorWin(self):
@@ -66,17 +48,17 @@ class Xoring(tk.Frame):
         def LoadXOR(XorType,IPath,OPath):    
             
             if (os.path.isdir(IPath)==False or os.path.isdir(OPath)==False):
-                SMS.RunErrorIO(XorRun)
+                RunErrorIO(XorRun)
             else:
-                SMS.RunOn(XorRun)
-                time.sleep(1)
+                RunOn(XorRun)
+            
                 img=[]
                 for name in os.listdir(IPath):
                     if name.endswith(".png"):    
                             try:
                                 img.append(imageio.imread(IPath + name))
                             except:
-                                SMS.RunErrorLoad(XorRun)
+                                RunErrorLoad(XorRun)
             
                 NumImages=len(img)
                 
@@ -94,17 +76,17 @@ class Xoring(tk.Frame):
                             try:
                                 mimg.imsave(OPath + str(i) + '-' + str(j) + ".png", Mix)
                             except: 
-                                SMS.RunErrorSave(XorRun)
+                                RunErrorSave(XorRun)
                                 
-                SMS.RunFinish(XorRun)
+                RunFinish(XorRun)
         
-        SMS.RunStart(XorRun)
+        RunStart(XorRun)
 
 #FORMATING##############################################################################################################
 
         #Buttons to load input/output folders, set label to empty
-        buttonInput= ttk.Button(topXor, text="Select input path",command=lambda: [AskInput(self),SMS.RunStart(XorRun)])
-        buttonOutput= ttk.Button(topXor, text="Select output path",command=lambda: [AskOutput(self),SMS.RunStart(XorRun)])
+        buttonInput= ttk.Button(topXor, text="Select input path",command=lambda: [AskInput(self),RunStart(XorRun)])
+        buttonOutput= ttk.Button(topXor, text="Select output path",command=lambda: [AskOutput(self),RunStart(XorRun)])
         
         #Input/output paths chosen
         #Text in front of input / output paths chosen
@@ -113,12 +95,12 @@ class Xoring(tk.Frame):
         SaveTextI = ttk.Label(topXor, text="INPUT PATH:")
         SaveTextO = ttk.Label(topXor, text="OUTPUT PATH:")
         
-        rbXOR = ttk.Radiobutton(topXor,text="XOR (default)",variable=self.GateChoice,value=0,command=lambda:SMS.RunStart(XorRun))
-        rbAND = ttk.Radiobutton(topXor,text="AND",variable=self.GateChoice,value=1,command=lambda:SMS.RunStart(XorRun))
-        rbOR = ttk.Radiobutton(topXor,text="OR",variable=self.GateChoice,value=2,command=lambda:SMS.RunStart(XorRun))
+        rbXOR = ttk.Radiobutton(topXor,text="XOR (default)",variable=self.GateChoice,value=0,command=lambda:RunStart(XorRun))
+        rbAND = ttk.Radiobutton(topXor,text="AND",variable=self.GateChoice,value=1,command=lambda:RunStart(XorRun))
+        rbOR = ttk.Radiobutton(topXor,text="OR",variable=self.GateChoice,value=2,command=lambda:RunStart(XorRun))
         
         #Run tool with selected directories
-        buttonRunXor = ttk.Button(topXor, text="Run tool",command=lambda: [SMS.RunStart(XorRun),LoadXOR(self.GateChoice.get(),FolderInput.get(),FolderOutput.get())])
+        buttonRunXor = ttk.Button(topXor, text="Run tool",command=lambda: [RunStart(XorRun),LoadXOR(self.GateChoice.get(),FolderInput.get(),FolderOutput.get())])
         
         #Variable label based on status of tool
         XorRunText = ttk.Label(topXor, textvariable=XorRun)

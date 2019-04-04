@@ -1,39 +1,20 @@
-try:
-    import tkinter as tk
-    from tkinter import ttk
-    from tkinter import filedialog
-    from tkinter import StringVar
-except:
-    print("tkinter import error")
-    raise SystemExit
-    
-try:
-    import os
-except:
-    print("os import error")
-    raise SystemExit
+import tkinter as tk
+from tkinter import ttk
+from tkinter import filedialog
+from tkinter import StringVar
+import os
 
-try:
-    import time
-except:
-    print("time import error")
-    raise SystemExit
+from PIL import Image
+import matplotlib.image as mimg
 
-try:        
-    from PIL import Image
-    import imageio
-    import matplotlib.image as mimg
-except: 
-    print("PIL/imageio/matplotlib import error")
-    raise SystemExit
-    
+#External file import#########################################################################
 try:
-    import LoadMessages as X
-    SMS = X.Messages()
+    from LoadMessages import * 
  
 except ImportError:
     print('dependent file import error')
     raise SystemExit
+#############################################################################################
 
 class ImageRGB(tk.Frame):
     def IndividualRGB(self):
@@ -69,11 +50,11 @@ class ImageRGB(tk.Frame):
             height = None
             
             if (os.path.isfile(IFile)==False or os.path.isdir(OPath)==False):
-                SMS.RunErrorIO(RGBRun)
+                RunErrorIO(RGBRun)
             elif IFile.endswith(".png")==False:
-                SMS.RunNotPNG(RGBRun)
+                RunNotPNG(RGBRun)
             else:
-                SMS.RunOn(RGBRun)
+                RunOn(RGBRun)
        
                 try:
                     im = Image.open(IFile) #your image
@@ -91,14 +72,14 @@ class ImageRGB(tk.Frame):
                             if RGB not in list_RGB:
                                 list_RGB.append(RGB)
                 except:
-                    SMS.RunErrorLoad(RGBRun)
+                    RunErrorLoad(RGBRun)
             
             LoadRGB(list_RGB,im,width,height,OType,OPath)
                              
         def LoadRGB(list_RGB,im,width,height,OType,OPath):
                 #LOADRGB #################################################
                 if OType==0:
-                    SMS.RunOptionUnavailable(RGBRun)
+                    RunOptionUnavailable(RGBRun)
                 elif OType==1:
                     im_new=[]
                     for i in range(0,len(list_RGB)):
@@ -121,23 +102,23 @@ class ImageRGB(tk.Frame):
                         try:
                             mimg.imsave(OPath + '-'.join(map(str,list_RGB[colors])) + ".png", im_new[colors])
                         except: 
-                            SMS.RunErrorSave(RGBRun)
+                            RunErrorSave(RGBRun)
                             break
                 
-                    SMS.RunFinish(RGBRun)
+                    RunFinish(RGBRun)
                 ############################################################
                 
-        SMS.RunStart(RGBRun)
+        RunStart(RGBRun)
 
 
 #FORMATING##############################################################################################################
 
         #Buttons to load input/output folders, set label to empty
-        buttonInput= ttk.Button(topRGB, text="Select input file",command=lambda: [AskInput(self),SMS.RunStart(RGBRun)])
-        buttonOutput= ttk.Button(topRGB, text="Select output path",command=lambda: [AskOutput(self),SMS.RunStart(RGBRun)])
+        buttonInput= ttk.Button(topRGB, text="Select input file",command=lambda: [AskInput(self),RunStart(RGBRun)])
+        buttonOutput= ttk.Button(topRGB, text="Select output path",command=lambda: [AskOutput(self),RunStart(RGBRun)])
         
-        rbSingleColor = ttk.Radiobutton(topRGB,text="Export a single color",variable=self.OType,value=0,command=lambda:SMS.RunStart(RGBRun))
-        rbAllColors = ttk.Radiobutton(topRGB,text="Export all colors",variable=self.OType,value=1,command=lambda:SMS.RunStart(RGBRun))
+        rbSingleColor = ttk.Radiobutton(topRGB,text="Export a single color",variable=self.OType,value=0,command=lambda:RunStart(RGBRun))
+        rbAllColors = ttk.Radiobutton(topRGB,text="Export all colors",variable=self.OType,value=1,command=lambda:RunStart(RGBRun))
         
         #Input/output paths chosen
         #Text in front of input / output paths chosen
@@ -147,7 +128,7 @@ class ImageRGB(tk.Frame):
         SaveTextO = ttk.Label(topRGB, text="OUTPUT PATH:")
         
         #Run tool with selected directories
-        buttonRunRGB = ttk.Button(topRGB, text="Run tool",command=lambda: [SMS.RunStart(RGBRun),OpenRGB(self.OType.get(),FileInput.get(),FolderOutput.get())])
+        buttonRunRGB = ttk.Button(topRGB, text="Run tool",command=lambda: [RunStart(RGBRun),OpenRGB(self.OType.get(),FileInput.get(),FolderOutput.get())])
         
         #Variable label based on status of tool
         RGBRunText = ttk.Label(topRGB, textvariable=RGBRun)

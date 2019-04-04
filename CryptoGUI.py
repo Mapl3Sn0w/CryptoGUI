@@ -1,33 +1,19 @@
-try:
-    import tkinter as tk
-    from tkinter import ttk
-    from tkinter import filedialog
-    from tkinter import font as tkfont
-    from tkinter import StringVar
-except:
-    print("tkinter import error")
-    raise SystemExit
-
-try:
-    import PIL
-    from PIL import ImageTk, Image
-except:
-    print("PIL import error")
-    raise SystemExit
-
-try:
-    import sys
-except:
-    print("sys import error")
-    raise SystemExit
+import tkinter as tk
+from tkinter import ttk
+from tkinter import filedialog
+from tkinter import font as tkfont
+from tkinter import StringVar
+import PIL
+from PIL import ImageTk, Image
+import sys
 
 try:
     import ImageXOR as IMIX
-    import WifCombos as WIFC
+    import WIFCheck as WIFC
     import LoadTools as TOOLS
     import ImageRGB as IRGB
     import TextAreciboTransform as TXTAT
-    
+    #import TextWordFinder as TXTWF
 except ImportError:
     print('dependent file import error')
     raise SystemExit
@@ -63,6 +49,9 @@ class CheckOpenWindow():
     def OpenAreciboWin(self):
         TXTAT.Arecibo().AreciboTransformation()
 
+    #def OpenWordFinderWin(self):
+    #    TXTWF.TextWordFinder().WordFinder()
+
 #Goto class in other .py file to load external tool in subdirectory
 def LoadX(toolNum):
     TOOLS.LoadTools().RunX(toolNum)
@@ -74,6 +63,7 @@ def LoadI(toolNum):
         elif item==1: CheckOpenWindow().OpenWifWin()
         elif item==2: CheckOpenWindow().OpenRGBWin()
         elif item==3: CheckOpenWindow().OpenAreciboWin()
+        #elif item==4: CheckOpenWindow().OpenWordFinderWin()
         
     switch(toolNum)
     
@@ -172,12 +162,13 @@ NameITool[0].set("Image XOR")
 NameITool[1].set("WIF validation")
 NameITool[2].set("RGB sets")
 NameITool[3].set("Arecibo-esque transform")
+#NameITool[4].set("Word finder square")
 
-DescriptionITool[0].set("Applying logical gates on images")
-DescriptionITool[1].set("Validating WIFs from combinations")
-DescriptionITool[2].set("Create individual images from RGB sets")
-DescriptionITool[3].set("Create individual text files from combinations of arecibo-esque style formatting")
-
+DescriptionITool[0].set("Apply logical gates on images (PNG only)")
+DescriptionITool[1].set("Validate WIFs from list (TXT only)")
+DescriptionITool[2].set("Create individual images from RGB sets (PNG only)")
+DescriptionITool[3].set("Create individual arecibo-esque style formatting combinations")
+#DescriptionITool[4].set("Analyze word finder square line by line")
 ##################################################################################
 
 #Tools sections-Header labels################################################################
@@ -247,7 +238,11 @@ class InitAlphabets:
         
         #Hide the columns following the first one
         alphatree["displaycolumns"]=('col1')
-                
+        
+        #Frame just for image so we can clear later
+        ImageFrame = tk.Frame(tabAlphabets)
+        ImageFrame.grid(sticky='NSEW',row=0,column=1)
+        
         #Define result of clicking on line in alphatree
         def selectItem(a):
             curItem = alphatree.focus()
@@ -258,7 +253,8 @@ class InitAlphabets:
                 basewidth = 800
                 
                 if Line_data[1]=="ALL":
-                    load = Image.open('Alphabets/All.png')
+                    #load = Image.open('Alphabets/All.png')
+                    pass
                 else:
                     load = Image.open('Alphabets/'+ Line_data[1]+'.png')
                 
@@ -266,12 +262,14 @@ class InitAlphabets:
                 hsize = int((float(load.size[1])*float(wpercent)))
                 load = load.resize((basewidth,hsize),Image.ANTIALIAS)
                 render = ImageTk.PhotoImage(load)
-                img = ttk.Label(tabAlphabets, image = render)
+                img = ttk.Label(ImageFrame, image = render)
                 img.image = render
-                img.grid(sticky='N',row=0,column=1)
+                img.grid(sticky='NSEW',row=0,column=0)
                 
             except:
-                print("Error loading: " +Line_data[1])          
+                pass
+                #print("Error loading: " +Line_data[1])          
+                
 
         #Set up image on mouse button release
         alphatree.bind('<ButtonRelease-1>', selectItem)

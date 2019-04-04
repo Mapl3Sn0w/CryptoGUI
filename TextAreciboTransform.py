@@ -1,57 +1,33 @@
-try:
-    import tkinter as tk
-    from tkinter import ttk
-    from tkinter import filedialog
-    from tkinter import StringVar
-except:
-    print("tkinter import error")
-    raise SystemExit
+import tkinter as tk
+from tkinter import ttk
+from tkinter import filedialog
+from tkinter import StringVar
+import os
 
-try:
-    import os
-except:
-    print("os import error")
-    raise SystemExit
+from PIL import Image,ImageDraw,ImageFont
+#import matplotlib.image as mimg
 
-try:
-    import time
-except:
-    print("time import error")
-    raise SystemExit
+import numpy
 
-try:        
-    from PIL import Image,ImageDraw,ImageFont
-    import imageio
-    import matplotlib.image as mimg
-except: 
-    print("PIL/imageio/matplotlib import error")
-    raise SystemExit
+#import string
+from string import whitespace, punctuation, digits, ascii_uppercase, ascii_lowercase
 
+#External file import#########################################################################
 try:
-    import numpy
-except:
-    print("numpy import error")
-
-try:
-    import string
-    from string import whitespace, punctuation, digits, ascii_uppercase, ascii_lowercase
-except:
-    print('string import error')
-    raise SystemExit
-
-try:
-    import LoadMessages as X
-    SMS = X.Messages()
+    from LoadMessages import * 
+    from FunctionsListsArraysTuples import *
+    from FunctionsMath import *
  
 except ImportError:
     print('dependent file import error')
     raise SystemExit
+#############################################################################################
 
 class Arecibo(tk.Frame):
     def AreciboTransformation(self):
         topAT = tk.Toplevel(self)
         topAT.title("Applying Arecibo style transformation for all combinations")
-        topAT.geometry("900x280")
+        topAT.geometry("600x280")
         
         #Set variable input, output path string & operation done text
         FileInput = StringVar()
@@ -78,10 +54,7 @@ class Arecibo(tk.Frame):
                     BaseXEntry.config(state='enabled')
                     BaseXCharEntry.config(state='enabled')
             
-            SMS.RunStart(ATRun)
-        
-        def removedupes(x):
-            return list(dict.fromkeys(x))
+            RunStart(ATRun)
         
         def character_check_1(EntryStr):
             if len(EntryStr.get())>0:
@@ -119,13 +92,6 @@ class Arecibo(tk.Frame):
         def Exclusions(self):
             Ex = [self.oWS.get(),self.oP.get(),self.oD.get(),self.oU.get(),self.oL.get()]
             return Ex
-            
-        def factors(n):
-            factors_list=[]
-            for i in range(1, int(n**0.5)+1):
-                if n % i == 0:
-                    factors_list.append([i,n//i])
-            return factors_list
         
         def Structured_image(s,W,H):
             new_imagearray=numpy.chararray((W, H))  
@@ -218,9 +184,9 @@ class Arecibo(tk.Frame):
         
         def LoadAT(Exclusions,IFile,OPath):    
             if (os.path.isfile(IFile)==False or os.path.isdir(OPath)==False):
-                SMS.RunErrorIO(ATRun)
+                RunErrorIO(ATRun)
             else:
-                SMS.RunOn(ATRun)
+                RunOn(ATRun)
                 
                 s=''
                 with open (IFile, "r") as txtfile:
@@ -250,17 +216,18 @@ class Arecibo(tk.Frame):
                     #Ascii art option
                     call = asciiArt(String_factors, StringJoin, OPath)
                 
-                SMS.RunFinish(ATRun)
+                RunFinish(ATRun)
         
-        SMS.RunStart(ATRun)
+        RunStart(ATRun)
         
         BaseXVar.trace("w", lambda *args: character_check_1(BaseXVar))
         BaseXCharVar.trace("w", lambda *args: character_check_2(BaseXCharVar))
+        
 #FORMATING##############################################################################################################
 
         #Buttons to load input/output folders, set label to empty
-        buttonInput= ttk.Button(topAT, text="Select input file",command=lambda: [AskInput(self),SMS.RunStart(ATRun)])
-        buttonOutput= ttk.Button(topAT, text="Select output path",command=lambda: [AskOutput(self),SMS.RunStart(ATRun)])
+        buttonInput= ttk.Button(topAT, text="Select input file",command=lambda: [AskInput(self),RunStart(ATRun)])
+        buttonOutput= ttk.Button(topAT, text="Select output path",command=lambda: [AskOutput(self),RunStart(ATRun)])
         
         #Input/output paths chosen
         #Text in front of input / output paths chosen
@@ -271,33 +238,28 @@ class Arecibo(tk.Frame):
         
         #Exclude the following types of characters:
         ExclusionText = ttk.Label(topAT, text="Exclude the following types of characters:")
-        cbWS = ttk.Checkbutton(topAT, text="Whitespace", variable=self.oWS,command=lambda:SMS.RunStart(ATRun))
-        cbP = ttk.Checkbutton(topAT, text="Punctuation", variable=self.oP,command=lambda:SMS.RunStart(ATRun))
-        cbD = ttk.Checkbutton(topAT, text="Digits", variable=self.oD,command=lambda:SMS.RunStart(ATRun))
-        cbU = ttk.Checkbutton(topAT, text="Uppercase", variable=self.oU,command=lambda:SMS.RunStart(ATRun))
-        cbL = ttk.Checkbutton(topAT, text="Lowercase", variable=self.oL,command=lambda:SMS.RunStart(ATRun))
+        cbWS = ttk.Checkbutton(topAT, text="Whitespace", variable=self.oWS,command=lambda:RunStart(ATRun))
+        cbP = ttk.Checkbutton(topAT, text="Punctuation", variable=self.oP,command=lambda:RunStart(ATRun))
+        cbD = ttk.Checkbutton(topAT, text="Digits", variable=self.oD,command=lambda:RunStart(ATRun))
+        cbU = ttk.Checkbutton(topAT, text="Uppercase", variable=self.oU,command=lambda:RunStart(ATRun))
+        cbL = ttk.Checkbutton(topAT, text="Lowercase", variable=self.oL,command=lambda:RunStart(ATRun))
         
         #Type of extraction
         ExtractionTypeText = ttk.Label(topAT, text="Pick the extraction type:")
-        rbBaseX = ttk.Radiobutton(topAT,text="Base X",variable=self.ExtractionType,value=0,command=lambda:[SMS.RunStart(ATRun),BaseSelection(self)])
-        rbAsciiArt = ttk.Radiobutton(topAT,text="Ascii Art",variable=self.ExtractionType,value=1,command=lambda:[SMS.RunStart(ATRun),BaseSelection(self)])
+        rbBaseX = ttk.Radiobutton(topAT,text="Base X",variable=self.ExtractionType,value=0,command=lambda:[RunStart(ATRun),BaseSelection(self)])
+        rbAsciiArt = ttk.Radiobutton(topAT,text="Ascii Art",variable=self.ExtractionType,value=1,command=lambda:[RunStart(ATRun),BaseSelection(self)])
         BaseXEntry = ttk.Entry(topAT,textvariable=BaseXVar)
         BaseXCharEntry = ttk.Entry(topAT,textvariable=BaseXCharVar)
         BaseXText = ttk.Label(topAT, text="Base (2,3 or 4):")
         BaseXCharText = ttk.Label(topAT, text="Characters (no spaces):")
         
         #Run tool with selected directories
-        buttonRunAT = ttk.Button(topAT, text="Run tool",command=lambda: [SMS.RunStart(ATRun),LoadAT(Exclusions(self),FileInput.get(),FolderOutput.get())])
+        buttonRunAT = ttk.Button(topAT, text="Run tool",command=lambda: [RunStart(ATRun),LoadAT(Exclusions(self),FileInput.get(),FolderOutput.get())])
         
         #Variable label based on status of tool
         ATRunText = ttk.Label(topAT, textvariable=ATRun)
         #Exit button for topXor
         buttonExit = ttk.Button(topAT, text="Exit", command=lambda: topAT.destroy())
-        
-        #Setting default column widths for topXor
-        topAT.grid_columnconfigure(1, minsize=100)
-        topAT.grid_columnconfigure(2, minsize=150)
-        topAT.grid_columnconfigure(3, minsize=100)
         
         #Placing widgets on topXor frame
         buttonInput.grid(sticky='NSEW',row=0,column=0)
@@ -322,7 +284,6 @@ class Arecibo(tk.Frame):
         BaseXCharEntry.grid(sticky='NSEW',row=9,column=2)
         rbAsciiArt.grid(sticky='NSEW',row=10,column=0)
 
-        
         buttonRunAT.grid(sticky='NSEW',row=11,column=0)
         ATRunText.grid(sticky='NSEW',row=11, column=1,columnspan=3)
         buttonExit.grid(sticky='NSEW',row=11,column=4)
